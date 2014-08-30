@@ -1,0 +1,9 @@
+bin
+obj
+*.suo
+*.user
+_*
+packages
+*.nupkg
+node_modules
+.ntvs_analysis.dat

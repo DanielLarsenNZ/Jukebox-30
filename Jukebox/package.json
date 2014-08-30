@@ -1,0 +1,17 @@
+{
+  "name": "Jukebox",
+  "version": "0.0.0",
+  "description": "Jukebox",
+  "main": "app.js",
+  "author": {
+    "name": "dlarsen",
+    "email": ""
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "jade": "*",
+    "stylus": "*",
+    "node-uuid" :  "*",
+    "azure":  "*"
+  }
+}
