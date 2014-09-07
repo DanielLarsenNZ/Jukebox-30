@@ -37,6 +37,7 @@
     <Compile Include="routes\user.js" />
     <Compile Include="services\httpjson.js" />
     <Compile Include="services\spotify.js" />
+    <Compile Include="services\queuestorage.js" />
     <Compile Include="services\tablestorage.js" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\style.styl" />

@@ -14,6 +14,7 @@
     "node-uuid" :  "*",
     "azure":  "*",
     "dotenv": "*",
-    "newrelic":  "*"
+    "newrelic":  "*",
+    "azure-storage": "*"
   }
 }

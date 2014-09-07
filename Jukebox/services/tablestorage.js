@@ -65,15 +65,6 @@ var createTableIfNotExists = function (tableService, table, callback) {
 
 var getTableService = function () {
     var azure = require('azure');
-
-    // The NTVS can't see the AppSettings, so if null, must be debugging, use Development Storage
-    var tableService = process.env.StorageAccountName === undefined
-                       ? azure.createTableService("devstoreaccount1",
-                                                   "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
-                                                   "127.0.0.1:10002")
-                       : azure.createTableService(process.env.StorageAccountName,
-                                                   process.env.StorageAccountKey,
-                                                   process.env.StorageAccountTableStoreHost);
+    var tableService = azure.createTableService();
     return tableService;
 };
-

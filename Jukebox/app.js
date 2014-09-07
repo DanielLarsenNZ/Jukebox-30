@@ -36,8 +36,9 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/api/jukeboxes', api.createJukebox);
-// GET /api/playlists?username=daniellarsennz
 app.get('/api/playlists', api.getPlaylists);
+// POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
+app.post('/api/jukeboxes/:id/tracks', api.importPlaylist);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
