@@ -8,3 +8,4 @@ packages
 node_modules
 .ntvs_analysis.dat
 .env
+newrelic_agent.log

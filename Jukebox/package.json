@@ -13,6 +13,7 @@
     "stylus": "*",
     "node-uuid" :  "*",
     "azure":  "*",
-    "dotenv": "*"
+    "dotenv": "*",
+    "newrelic":  "*"
   }
 }

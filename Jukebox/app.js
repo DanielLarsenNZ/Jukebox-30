@@ -5,6 +5,7 @@
 var dotenv = require('dotenv');
 dotenv.load();
 
+require('newrelic');
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
