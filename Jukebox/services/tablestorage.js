@@ -13,6 +13,7 @@ module.exports.insert = function (table, entity, callback) {
                 callback(error);
                 return;
             }
+            console.log("tablestorage inserted ", table, entity);
             callback(null);
         });
     });
@@ -26,6 +27,7 @@ module.exports.delete = function (table, entity, callback) {
             callback(error);
             return;
         }
+        console.log("tablestorage deleted ", table, entity);
         callback(null);
     });
 };
@@ -45,6 +47,7 @@ module.exports.get = function (table, query, callback) {
                 callback(error);
                 return;
             }
+            console.log("tablestorage queried ", query);
             callback(null, entities);
         });
     });

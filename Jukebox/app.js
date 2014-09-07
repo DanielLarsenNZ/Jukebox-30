@@ -2,6 +2,8 @@
 /**
  * Module dependencies.
  */
+var dotenv = require('dotenv');
+dotenv.load();
 
 var express = require('express');
 var routes = require('./routes');
@@ -33,6 +35,8 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/api/jukeboxes', api.createJukebox);
+// GET /api/playlists?username=daniellarsennz
+app.get('/api/playlists', api.getPlaylists);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

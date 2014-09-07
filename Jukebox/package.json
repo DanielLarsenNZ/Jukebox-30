@@ -12,6 +12,7 @@
     "jade": "*",
     "stylus": "*",
     "node-uuid" :  "*",
-    "azure":  "*"
+    "azure":  "*",
+    "dotenv": "*"
   }
 }

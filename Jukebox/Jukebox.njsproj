@@ -34,7 +34,9 @@
     <Compile Include="routes\api.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="routes\user.js" />
-    <Compile Include="tablestorage.js" />
+    <Compile Include="services\httpjson.js" />
+    <Compile Include="services\spotify.js" />
+    <Compile Include="services\tablestorage.js" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="views\index.jade" />
@@ -42,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="services\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
