@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Jukebox.Web", "Jukebox.Web\Jukebox.Web.njsproj", "{91518815-7E05-4485-8391-CD45D3F688EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jukebox", "Jukebox\Jukebox.csproj", "{7C9DF8A7-6727-45F8-BF4C-1EE19F6D1A79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scale.Storage", "..\Scale-Storage\Scale.Storage\Scale.Storage.csproj", "{E24AE0AD-D71C-423C-8363-940BA2EB4E24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{0AE31AE0-F623-4C53-A041-A0D38842F191}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radiostr.SpotifyWebApi", "..\Radiostr-SpotifyWebApi\SpotifyWebApi\Radiostr.SpotifyWebApi.csproj", "{E0BB2169-4CC0-4856-A699-295A8B1FF908}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D678389E-2918-499C-910E-4ACE7958108F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jukebox.WebJobs", "Jukebox.WebJobs\Jukebox.WebJobs.csproj", "{A550CC9C-3F8B-4C51-A46A-468D89945639}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91518815-7E05-4485-8391-CD45D3F688EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91518815-7E05-4485-8391-CD45D3F688EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91518815-7E05-4485-8391-CD45D3F688EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91518815-7E05-4485-8391-CD45D3F688EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C9DF8A7-6727-45F8-BF4C-1EE19F6D1A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C9DF8A7-6727-45F8-BF4C-1EE19F6D1A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C9DF8A7-6727-45F8-BF4C-1EE19F6D1A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C9DF8A7-6727-45F8-BF4C-1EE19F6D1A79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E24AE0AD-D71C-423C-8363-940BA2EB4E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24AE0AD-D71C-423C-8363-940BA2EB4E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24AE0AD-D71C-423C-8363-940BA2EB4E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24AE0AD-D71C-423C-8363-940BA2EB4E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0BB2169-4CC0-4856-A699-295A8B1FF908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0BB2169-4CC0-4856-A699-295A8B1FF908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0BB2169-4CC0-4856-A699-295A8B1FF908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0BB2169-4CC0-4856-A699-295A8B1FF908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A550CC9C-3F8B-4C51-A46A-468D89945639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A550CC9C-3F8B-4C51-A46A-468D89945639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A550CC9C-3F8B-4C51-A46A-468D89945639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A550CC9C-3F8B-4C51-A46A-468D89945639}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E24AE0AD-D71C-423C-8363-940BA2EB4E24} = {0AE31AE0-F623-4C53-A041-A0D38842F191}
+		{E0BB2169-4CC0-4856-A699-295A8B1FF908} = {0AE31AE0-F623-4C53-A041-A0D38842F191}
+	EndGlobalSection
+EndGlobal
