@@ -53,6 +53,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Radiostr.SpotifyWebApi, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Radiostr-SpotifyWebApi.1.0.2\lib\net45\Radiostr.SpotifyWebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Scale.Storage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Scale-Storage.1.1.0\lib\net45\Scale.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -71,16 +79,6 @@
     <Compile Include="Entities\JukeboxTrackEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ImportSpotifyPlaylistService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Radiostr-SpotifyWebApi\SpotifyWebApi\Radiostr.SpotifyWebApi.csproj">
-      <Project>{e0bb2169-4cc0-4856-a699-295a8b1ff908}</Project>
-      <Name>Radiostr.SpotifyWebApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Scale-Storage\Scale.Storage\Scale.Storage.csproj">
-      <Project>{e24ae0ad-d71c-423c-8363-940ba2eb4e24}</Project>
-      <Name>Scale.Storage</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
