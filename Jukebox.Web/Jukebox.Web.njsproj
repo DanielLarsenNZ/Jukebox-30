@@ -33,6 +33,12 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="newrelic.js" />
+    <Compile Include="public\scripts\bootstrap.js" />
+    <Compile Include="public\scripts\bootstrap.min.js" />
+    <Compile Include="public\scripts\controllers\jukeboxController.js" />
+    <Compile Include="public\scripts\jquery-1.10.2.js" />
+    <Compile Include="public\scripts\modernizr-2.6.2.js" />
+    <Compile Include="public\scripts\respond.js" />
     <Compile Include="routes\api.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="routes\user.js" />
@@ -41,17 +47,23 @@
     <Compile Include="services\queuestorage.js" />
     <Compile Include="services\tablestorage.js" />
     <Content Include="package.json" />
-    <Content Include="public\stylesheets\style.styl" />
+    <Content Include="public\css\bootstrap.css" />
+    <Content Include="public\css\bootstrap.min.css" />
+    <Content Include="public\css\csspinner.css" />
+    <Content Include="public\css\site.css" />
+    <Content Include="public\jukebox.html" />
+    <Content Include="public\index.html" />
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="public\scripts\controllers\" />
     <Folder Include="services\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
-    <Folder Include="public\javascripts\" />
-    <Folder Include="public\stylesheets\" />
+    <Folder Include="public\scripts\" />
+    <Folder Include="public\css\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
   </ItemGroup>

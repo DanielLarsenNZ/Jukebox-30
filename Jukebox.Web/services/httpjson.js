@@ -38,7 +38,7 @@
 
             res.on('end', function() {
                 if (res.statusCode != 200) {
-                    callback(new Error("HTTP Status " + res.statusCode + "\r\n\t" + output));
+                    callback(new Error(output));
                     return;
                 }
                 var obj = JSON.parse(output);

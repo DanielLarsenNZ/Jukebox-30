@@ -15,6 +15,7 @@ namespace Jukebox.Services
 {
     public class ImportSpotifyPlaylistService
     {
+        internal const string JukeboxTrackTableName = "jukeboxtrack";
         private readonly ITableStorage _storage;
         private readonly IPlaylistsApi _api;
 
@@ -22,6 +23,8 @@ namespace Jukebox.Services
         {
             _storage = tableStorage;
             _api = playlistsApi;
+
+            _storage.CreateTables(new[] { JukeboxTrackTableName }).Wait();
         }
 
         public async Task Import(string message)
@@ -35,14 +38,15 @@ namespace Jukebox.Services
             var response = await _api.GetTracks((string)importMessage.username, (string)importMessage.playlistId);
             var tracks = new List<dynamic>(response.items);
 
-            foreach (dynamic track in tracks)
+            foreach (dynamic item in tracks)
             {
-                entities.Add(new JukeboxTrackEntity(importMessage.jukeboxId, track.name, track.artists[0].name, 
-                    track.album.name, track.preview_url, track.album.images[0].url));
+                entities.Add(new JukeboxTrackEntity((string)importMessage.jukeboxId, (string)item.track.name,
+                    (string)item.track.artists[0].name, (string)item.track.album.name, (string)item.track.preview_url,
+                    (string)item.track.album.images[0].url));
             }
 
             //  add to tracks table
-            await _storage.Insert("jukebox-track", entities.ToArray());
+            await _storage.Insert(JukeboxTrackTableName, entities.ToArray());
         }
 
         public static ImportSpotifyPlaylistService GetService(HttpClient httpClient)

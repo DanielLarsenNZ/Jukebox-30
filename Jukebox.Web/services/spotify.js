@@ -6,7 +6,7 @@ module.exports.getPlaylists = function(username, callback) {
     getAuthToken(function(error, token) {
         if (error) {callback(error); return; }
 
-        $http.get(baseUrl + '/users/' + encodeURIComponent(username) + '/playlists', {
+        $http.get(baseUrl + '/users/' + encodeURIComponent(username.toLowerCase()) + '/playlists', {
             headers: { 'Authorization': 'Bearer ' + token }
         }, function(error, response) {
             if (error) { callback(error); return; }
