@@ -1,6 +1,5 @@
-﻿var azure = require('azure-storage');
-
-module.exports.createMessage = function (queue, message, callback) {
+﻿module.exports.createMessage = function (queue, message, callback) {
+    var azure = require('azure-storage');
     var queueService = azure.createQueueService();
 
     queueService.createQueueIfNotExists(queue, function (error) {

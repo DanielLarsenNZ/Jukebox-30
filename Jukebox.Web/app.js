@@ -2,10 +2,12 @@
 /**
  * Module dependencies.
  */
+
+// dan's requires
 var dotenv = require('dotenv');
 dotenv.load();
-
 require('newrelic');
+
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -35,9 +37,10 @@ if ('development' == app.get('env')) {
 
 //app.get('/', routes.index);
 app.get('/users', user.list);
+
+// dan's routes
 app.post('/api/jukeboxes', api.createJukebox);
 app.get('/api/playlists', api.getPlaylists);
-// POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
 app.post('/api/jukeboxes/:id/tracks', api.importPlaylist);
 
 http.createServer(app).listen(app.get('port'), function(){

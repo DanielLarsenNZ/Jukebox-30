@@ -81,7 +81,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="AppSettings.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jukebox\Jukebox.csproj">
@@ -100,6 +102,7 @@
   <PropertyGroup>
     <PostBuildEvent>if exist $(ProjectDir)appSettings.local.config (copy /Y $(ProjectDir)appSettings.local.config $(ProjectDir)$(OutDir)appSettings.config)</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.0\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.0\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

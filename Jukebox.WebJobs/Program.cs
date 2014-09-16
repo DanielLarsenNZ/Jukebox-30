@@ -7,7 +7,6 @@ using Microsoft.Azure.WebJobs;
 
 namespace Jukebox.WebJobs
 {
-    // To learn more about Microsoft Azure WebJobs, please see http://go.microsoft.com/fwlink/?LinkID=401557
     public class Program
     {
         public static void Main()
@@ -18,6 +17,19 @@ namespace Jukebox.WebJobs
             var host = new JobHost(config);
             host.RunAndBlock();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public static async Task ImportPlaylist([QueueTrigger("import-playlist")] string message)
         {

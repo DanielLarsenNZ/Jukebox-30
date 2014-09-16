@@ -1,0 +1,97 @@
+Hacking on Azure
+
+115	SPLASH
+	- https://github.com/DanielLarsenNZ/Hacking-on-Azure
+
+115	INTRO
+	- Hi, today I'm going to talk about Code and specifically exploring, designing and discovering Code.
+	- (This is not a security talk)
+	- My year of discovery:
+		- TechEd 2013: TechEd 2013 was the year I discovered Azure
+		- Azure
+		- Hacking for fun and profit
+			- Work is "imperative", so much of it is about the "how"
+			- Hacking is more "declarative", it's about "what" and "what is possible"
+		- GitHub
+		- HACKAKL
+		- OSS
+			- Phoenix, piloted by Dr Zefram Cochrane in 2063, as portrayed in the excellent documentary "Star Trek: First Contact"
+			- Who would be happy if that "movie" turned out to be a documentary?
+				- Captain Jean-Luc Picard and the crew of the USS Enterprise time-travelled 300+ years (to 1996)
+			- To me, this is what OSS and Hacking is all about.
+		
+125	HACKING
+	- HACKAKL - civic Hacking
+		- The challenge: improve Auckland transport.
+		- Lining up at Rego story
+	- Trackl: Azure, Heroku, 2 APIs, 2 mobile clients
+		- Self-organising, cross-functional team
+			- Pete, Lee, Dan, Kiet, Don & Greg
+		- Designer / P.O
+
+135	DEMO BREAK
+	- Visual Studio 2013 Update 3
+	- NTVS
+		- http://www.hanselman.com/blog/IntroducingNodejsToolsForVisualStudio.aspx 
+		` http.get("http://localhost:1337/scouts", function (res) { console.log("yeah baby", res.statusCode); })
+		- Gotcha - turn off Intellisense for Node.js.
+		- Basic MS Azure Express Application
+		
+145	SPOTIFY WEB API
+	- It's not the Desktop API (SpotifyLib). Web API released in June 2014
+	- https://developer.spotify.com/web-api/code-examples/
+		- (Fiddler)
+		- http://lab.possan.se/thirtify
+		- https://github.com/possan/webapi-player-example
+	- EchoNest
+		- http://static.echonest.com/enspex/
+		- http://www.morecowbell.dj/
+	- Xbox Music API (July 2014)
+		- http://music.xbox.com/Developer
+		- You can (apply to) play tracks.
+		- Monetised through Affiliate program.
+	- http://new.musichackday.org/
+	
+155 JUKEBOX.WEB
+	- Node.js
+	- NTVS
+		- Gotchas
+			- Env vars don't show up in watch.
+			- App.config appSettings aren't available (use dotenv)
+	- Postman
+	- GitHub
+		- Deploy
+	- Feature map.
+	- Architecture
+		- Scale, performance, resilience
+	- Queue Storage
+	- Azure Storage Explorer
+		
+205	JUKEBOX.WEBJOBS
+	- WebJobs SDK
+	- async/await
+	- Table Storage
+	- GitHub deploy
+		- Project=Jukebox.Web (Kudu)
+	
+210	OUTRO
+	- Recap
+	- What I didn't talk about
+		- New Relic
+		- Newman
+		- Kudu
+		- CoreCLR, OWIN, Density
+		- Edge.js
+		- Azure costs
+		- Visual Studio Monaco
+		- Lean
+	- Azure is changing the way we reason about code.
+	- Spotify, Xbox Music and services like it are an opportunity. Music has utility
+	- OSS is the future.
+	
+LINKS
+	[1]. http://en.wikipedia.org/wiki/Hacker_(programmer_subculture)
+	
+CREDITS
+	[1]. http://commons.wikimedia.org/wiki/File%3AApollo_11_Earth.jpg By NASA [Public domain], via Wikimedia Commons
+	

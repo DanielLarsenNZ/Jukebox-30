@@ -1,5 +1,4 @@
-﻿var spotify = require('../services/spotify.js');
-
+﻿
     // POST /api/jukeboxes
     // creates a Jukebox and returns the id
 exports.createJukebox = function (req, res) {
@@ -17,10 +16,29 @@ exports.createJukebox = function (req, res) {
     
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // GET /api/playlists?username=daniellarsennz
     // Gets Spotify Playlists for a given username
-exports.getPlaylists = function(req, res) {
-    spotify.getPlaylists(req.query.username, function(error, response) {
+exports.getPlaylists = function (req, res) {
+    
+    var spotify = require('../services/spotify.js');
+    
+    spotify.getPlaylists(req.query.username, function (error, response) {
         if (error) {
             console.error(error.stack);
             res.send(500, error.message);
@@ -30,6 +48,24 @@ exports.getPlaylists = function(req, res) {
         res.json(response);
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
     // Adds the tracks from playlist xxxx to the Jukebox.

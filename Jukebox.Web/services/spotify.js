@@ -2,7 +2,8 @@
 var $http = require('../services/httpjson.js');
 
 // returns playlists[]
-module.exports.getPlaylists = function(username, callback) {
+module.exports.getPlaylists = function (username, callback) {
+
     getAuthToken(function(error, token) {
         if (error) {callback(error); return; }
 
@@ -16,6 +17,22 @@ module.exports.getPlaylists = function(username, callback) {
         });
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var authToken = { token:null, expires:null };
 
