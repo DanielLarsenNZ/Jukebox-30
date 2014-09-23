@@ -17,6 +17,17 @@
             <h1>Jukebox</h1>
 
             <div class="container" ng-controller="jukeboxController">
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="container">
+                            <button id="playButton" class="btn btn-success">Play</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="container">
@@ -61,32 +72,94 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" ng-show="loading">
-                    <div class="col-md-6">
-                        <div class="jumbotron">
-                            <h1>Loading...</h1>
+
+                        <div class="row" ng-show="loading">
+                            <div class="col-md-6">
+                                <div class="jumbotron">
+                                    <h1>Loading...</h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="error">
+                            <div class="col-md-6">
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error!</strong> {{ error }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row" ng-show="error">
-                    <div class="col-md-6">
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Error!</strong> {{ error }}
-                        </div>
-                    </div>
+                    <hr />
+                    <footer>
+                        <p><a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure">https://github.com/DanielLarsenNZ/Hacking-on-Azure</a></p>
+                    </footer>
                 </div>
-            </div>
-
-            <hr />
-            <footer>
-                <p><a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure">https://github.com/DanielLarsenNZ/Hacking-on-Azure</a></p>
-            </footer>
-        </div>
 
         <script src="/scripts/jquery-1.10.2.js"></script>
         <script src="/scripts/bootstrap.js"></script>
         <script src="/scripts/respond.js"></script>
+        
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io();
+            var _track;
+            $('#playButton').click(function () {
+                console.log("playButton.click");
+                socket.emit('next', 'codecamp2014'); //TODO: jukeboxId
+            });
+            
+            socket.on('play', function (track) {
+                _track = track;
+                console.log('play ' + track.url + ' cue = ' + getCue(track) + ' start time = ' + track.startTime + '. Duration = ' + track.duration);
+                play();
+            });
+
+            var getCue = function (track) {
+                return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
+            };
+
+            var audio = null;
+
+            // plays an audio track from url starting at cue
+            // For an advanced player implementation see https://github.com/possan/webapi-player-example/blob/master/services/playback.js
+            // http://www.w3schools.com/tags/ref_av_dom.asp
+            var play = function () {
+                if (audio != null) {
+                    audio.pause();
+                    delete (audio);
+                    audio = null;
+                }
+
+                audio = new Audio(_track.url);
+                //TODO: Attach to DOM and show controls ?
+                audio.controls = "controls";
+
+                audio.addEventListener('loadedmetadata', function () {
+                    console.log('audio loadedmetadata');
+                    //audio.play();
+                }, false);
+
+                audio.addEventListener('canplay', function () {
+                    var cue = getCue(_track);
+                    console.log('audio canplay', audio.currentTime);
+                    if (cue > 0 && audio.currentTime == 0) {
+                        audio.currentTime = cue / 1000;
+                        console.log('audio canplay', cue / 1000, audio.currentTime);
+                        audio.play();
+                    }
+                    
+                }, false );
+
+                audio.addEventListener('ended', function () {
+                    console.log('audio ended');
+                    audio = null;
+                    socket.emit('next');
+                }, false);
+            };
+
+        </script>
 
     </body>
 </html>

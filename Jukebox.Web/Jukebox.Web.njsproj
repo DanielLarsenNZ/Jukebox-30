@@ -44,6 +44,7 @@
     <Compile Include="routes\index.js" />
     <Compile Include="routes\user.js" />
     <Compile Include="services\httpjson.js" />
+    <Compile Include="services\playersocket.js" />
     <Compile Include="services\spotify.js" />
     <Compile Include="services\queuestorage.js" />
     <Compile Include="services\tablestorage.js" />

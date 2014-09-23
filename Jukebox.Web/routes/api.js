@@ -16,22 +16,6 @@ exports.createJukebox = function (req, res) {
     
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // GET /api/playlists?username=daniellarsennz
     // Gets Spotify Playlists for a given username
 exports.getPlaylists = function (req, res) {
@@ -48,24 +32,6 @@ exports.getPlaylists = function (req, res) {
         res.json(response);
     });
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
     // Adds the tracks from playlist xxxx to the Jukebox.

@@ -32,9 +32,13 @@ npm install
 
 ## Links
 * [Microsoft Azure Storage SDK for Node.js](https://github.com/Azure/azure-storage-node)
+* http://azure.microsoft.com/en-us/documentation/articles/storage-nodejs-how-to-use-table-storage/ - this is wrong! use from clause.
 * [Best Practices for Designing a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
 * [Writing an AngularJS App with an Express + Node.js Backend](http://briantford.com/blog/angular-express)
 * [Customizing deployments - Kudu](https://github.com/projectkudu/kudu/wiki/Customizing-deployments)
 * [Microsoft.Azure.WebJobs - Nuget](http://www.nuget.org/packages/Microsoft.Azure.WebJobs)
 * [Microsoft.Azure.WebJobs.Core - Nuget](http://www.nuget.org/packages/Microsoft.Azure.WebJobs.Core)
 * [possan/webapi-player-example (thirtify)](https://github.com/possan/webapi-player-example)
+* http://socket.io/get-started/chat/
+* http://www.w3schools.com/tags/ref_av_dom.asp
+

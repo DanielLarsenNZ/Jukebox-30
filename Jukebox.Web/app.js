@@ -6,12 +6,13 @@
 // dan's requires
 var dotenv = require('dotenv');
 dotenv.load();
-require('newrelic');
+//require('newrelic');  //TODO
 
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var api = require('./routes/api');
+var playerSocket = require('./services/playerSocket');
 var http = require('http');
 var path = require('path');
 
@@ -43,6 +44,13 @@ app.post('/api/jukeboxes', api.createJukebox);
 app.get('/api/playlists', api.getPlaylists);
 app.post('/api/jukeboxes/:id/tracks', api.importPlaylist);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+// socket.io
+var io = require('socket.io').listen(server);
+io.on('connection', playerSocket.connection);
+
+// //////////////

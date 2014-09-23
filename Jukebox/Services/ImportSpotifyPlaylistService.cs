@@ -40,6 +40,7 @@ namespace Jukebox.Services
 
             foreach (dynamic item in tracks)
             {
+                //TODO: Add duration & JSON
                 entities.Add(new JukeboxTrackEntity((string)importMessage.jukeboxId, (string)item.track.name,
                     (string)item.track.artists[0].name, (string)item.track.album.name, (string)item.track.preview_url,
                     (string)item.track.album.images[0].url));

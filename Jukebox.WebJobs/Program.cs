@@ -18,19 +18,6 @@ namespace Jukebox.WebJobs
             host.RunAndBlock();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         public static async Task ImportPlaylist([QueueTrigger("import-playlist")] string message)
         {
             Trace.TraceInformation("Import Playlist " + message);

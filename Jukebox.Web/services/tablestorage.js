@@ -35,7 +35,7 @@ module.exports.delete = function (table, entity, callback) {
     // Returns entities from query. Invokes callback(error, entities) when done.
 module.exports.get = function (table, query, callback) {
     var tableService = getTableService();
-    createTableIfNotExists(table, tableService, function (error) {
+    createTableIfNotExists(tableService, table, function (error) {
         if (error) {
             callback(error);
             return;

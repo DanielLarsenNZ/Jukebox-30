@@ -11,10 +11,11 @@
     "express": "3.4.4",
     "jade": "*",
     "stylus": "*",
-    "node-uuid" :  "*",
-    "azure":  "*",
+    "node-uuid": "*",
+    "azure": "*",
     "dotenv": "*",
-    "newrelic":  "*",
-    "azure-storage": "*"
+    "newrelic": "*",
+    "azure-storage": "*",
+    "socket.io": "^1.1.0"
   }
 }
