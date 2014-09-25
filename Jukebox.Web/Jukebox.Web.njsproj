@@ -59,11 +59,7 @@
     <Content Include="views\layout.jade" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\jobs\" />
-    <Folder Include="App_Data\jobs\continuous\" />
-    <Folder Include="App_Data\jobs\continuous\Jukebox-WebJobs\" />
     <Folder Include="bin\" />
-    <Folder Include="App_Data\" />
     <Folder Include="public\scripts\controllers\" />
     <Folder Include="services\" />
     <Folder Include="public\" />

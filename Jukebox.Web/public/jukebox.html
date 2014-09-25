@@ -155,7 +155,7 @@
                 audio.addEventListener('ended', function () {
                     console.log('audio ended');
                     audio = null;
-                    socket.emit('next');
+                    socket.emit('next', 'codecamp2014');
                 }, false);
             };
 

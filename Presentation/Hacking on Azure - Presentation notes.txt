@@ -4,32 +4,8 @@ Hacking on Azure
 	- https://github.com/DanielLarsenNZ/Hacking-on-Azure
 
 115	INTRO
-	- Hi, today I'm going to talk about Code and specifically exploring, designing and discovering Code.
-	- (This is not a security talk)
-	- My year of discovery:
-		- TechEd 2013: TechEd 2013 was the year I discovered Azure
-		- Azure
-		- Hacking for fun and profit
-			- Work is "imperative", so much of it is about the "how"
-			- Hacking is more "declarative", it's about "what" and "what is possible"
-		- GitHub
-		- HACKAKL
-		- OSS
-			- Phoenix, piloted by Dr Zefram Cochrane in 2063, as portrayed in the excellent documentary "Star Trek: First Contact"
-			- Who would be happy if that "movie" turned out to be a documentary?
-				- Captain Jean-Luc Picard and the crew of the USS Enterprise time-travelled 300+ years (to 1996)
-			- To me, this is what OSS and Hacking is all about.
 		
-125	HACKING
-	- HACKAKL - civic Hacking
-		- The challenge: improve Auckland transport.
-		- Lining up at Rego story
-	- Trackl: Azure, Heroku, 2 APIs, 2 mobile clients
-		- Self-organising, cross-functional team
-			- Pete, Lee, Dan, Kiet, Don & Greg
-		- Designer / P.O
-
-135	DEMO BREAK
+???	DEMO BREAK
 	- Visual Studio 2013 Update 3
 	- NTVS
 		- http://www.hanselman.com/blog/IntroducingNodejsToolsForVisualStudio.aspx 
@@ -37,22 +13,18 @@ Hacking on Azure
 		- Gotcha - turn off Intellisense for Node.js.
 		- Basic MS Azure Express Application
 		
-145	SPOTIFY WEB API
+???	SPOTIFY WEB API
 	- It's not the Desktop API (SpotifyLib). Web API released in June 2014
 	- https://developer.spotify.com/web-api/code-examples/
-		- (Fiddler)
 		- http://lab.possan.se/thirtify
 		- https://github.com/possan/webapi-player-example
-	- EchoNest
-		- http://static.echonest.com/enspex/
-		- http://www.morecowbell.dj/
 	- Xbox Music API (July 2014)
 		- http://music.xbox.com/Developer
 		- You can (apply to) play tracks.
 		- Monetised through Affiliate program.
 	- http://new.musichackday.org/
 	
-155 JUKEBOX.WEB
+??? JUKEBOX.WEB
 	- Node.js
 	- NTVS
 		- Gotchas
@@ -64,6 +36,9 @@ Hacking on Azure
 		- Turn off PHP
 		- Turn on Websockets (if using socket.io)
 		- Edit in Visual Studio
+			- Bugs
+				- https://github.com/projectkudu/kudu/issues/1344
+				- http://social.msdn.microsoft.com/Forums/azure/en-US/b0bda8aa-c89a-464f-b8c4-bdb523662012/edit-in-visual-studio-online-http-error-5001001?forum=windowsazurewebsitespreview
 		- App Settings
 			- Spotify keys
 			- Storage keys
@@ -76,6 +51,8 @@ Hacking on Azure
 		- Scale, performance, resilience
 	- Queue Storage
 	- Azure Storage Explorer
+	- Streaming logs
+		- Turn on File logging - Information level
 		
 205	JUKEBOX.WEBJOBS
 	- WebJobs SDK
@@ -83,6 +60,7 @@ Hacking on Azure
 	- Table Storage
 	- GitHub deploy
 		- Project=Jukebox.Web (Kudu)
+	- Deploying WebJobs (App_Data folder/ Publish wizard, etc)
 	
 210	OUTRO
 	- Recap
@@ -100,8 +78,8 @@ Hacking on Azure
 	- OSS is the future.
 	
 LINKS
-	[1]. http://en.wikipedia.org/wiki/Hacker_(programmer_subculture)
+	[1]. 
 	
 CREDITS
-	[1]. http://commons.wikimedia.org/wiki/File%3AApollo_11_Earth.jpg By NASA [Public domain], via Wikimedia Commons
+	[1]. 
 	
