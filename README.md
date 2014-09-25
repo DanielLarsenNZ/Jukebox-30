@@ -3,7 +3,7 @@ Hacking-on-Azure
 
 Code Camp Auckland 2014 talk. Demonstrating Azure by quickly building useful software to explore what is possible.
 
-http://hackingon.azurewebsites.net/
+http://jukebox30.azurewebsites.net/
 
 ### Getting started
 
@@ -36,8 +36,10 @@ npm install
 * [Best Practices for Designing a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
 * [Writing an AngularJS App with an Express + Node.js Backend](http://briantford.com/blog/angular-express)
 * [Customizing deployments - Kudu](https://github.com/projectkudu/kudu/wiki/Customizing-deployments)
+WebJobs
 * [Microsoft.Azure.WebJobs - Nuget](http://www.nuget.org/packages/Microsoft.Azure.WebJobs)
 * [Microsoft.Azure.WebJobs.Core - Nuget](http://www.nuget.org/packages/Microsoft.Azure.WebJobs.Core)
+* https://github.com/projectkudu/kudu/wiki/Web-jobs
 * [possan/webapi-player-example (thirtify)](https://github.com/possan/webapi-player-example)
 * http://socket.io/get-started/chat/
 * http://www.w3schools.com/tags/ref_av_dom.asp

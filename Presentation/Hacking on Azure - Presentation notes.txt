@@ -59,6 +59,16 @@ Hacking on Azure
 			- Env vars don't show up in watch.
 			- App.config appSettings aren't available (use dotenv)
 	- Postman
+	- New Azure Website
+		- Free Website
+		- Turn off PHP
+		- Turn on Websockets (if using socket.io)
+		- Edit in Visual Studio
+		- App Settings
+			- Spotify keys
+			- Storage keys
+		- Application Logging (File System) On (12 hours)
+	- New Storage account
 	- GitHub
 		- Deploy
 	- Feature map.
@@ -79,11 +89,11 @@ Hacking on Azure
 	- What I didn't talk about
 		- New Relic
 		- Newman
-		- Kudu
+		- Kudu ***
 		- CoreCLR, OWIN, Density
 		- Edge.js
 		- Azure costs
-		- Visual Studio Monaco
+		- Visual Studio Monaco ***
 		- Lean
 	- Azure is changing the way we reason about code.
 	- Spotify, Xbox Music and services like it are an opportunity. Music has utility
