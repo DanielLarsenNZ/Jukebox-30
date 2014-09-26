@@ -101,7 +101,8 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>if exist $(ProjectDir)appSettings.local.config (copy /Y $(ProjectDir)appSettings.local.config $(ProjectDir)$(OutDir)appSettings.config)</PostBuildEvent>
+    <PostBuildEvent>if exist $(ProjectDir)appSettings.local.config (copy /Y $(ProjectDir)appSettings.local.config $(ProjectDir)$(OutDir)appSettings.config);
+xcopy /E /Y $(ProjectDir)$(OutDir)*.* $(SolutionDir)Jukebox.Web\App_Data\jobs\continuous\Jukebox-WebJobs</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.0\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.0\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
