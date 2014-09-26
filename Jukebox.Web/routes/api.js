@@ -42,7 +42,8 @@ exports.importPlaylist = function (req, res) {
     var message = {
         jukeboxId: encodeURIComponent(req.params.id),
         username: encodeURIComponent(req.param('username')),
-        playlistId: encodeURIComponent(req.param('playlistId'))
+        playlistId: encodeURIComponent(req.param('playlistId')),
+        whenCreated: new Date()
     };
 
     queue.createMessage('import-playlist', JSON.stringify(message), function(error) {
@@ -51,6 +52,8 @@ exports.importPlaylist = function (req, res) {
             res.send(500, error.message);
             return;
         }
+
+        console.log("process ID", process.pid);
 
         res.send(200, "ok");
     });

@@ -12,27 +12,11 @@ module.exports.getPlaylists = function (username, callback) {
         }, function(error, response) {
             if (error) { callback(error); return; }
 
-            console.log('got playlists', response);
+            console.log('got playlists');
             callback(null, response);
         });
     });
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 var authToken = { token:null, expires:null };
 
@@ -55,7 +39,7 @@ var getAuthToken = function (callback) {
                 callback(error);
                 return;
             }
-            console.log('got auth token', response);
+            console.log('got auth token');
                 var expires = new Date(now.getTime() + response.expires_in * 60000);
                 authToken = { token: response.access_token, expires: expires };
                 callback(null, authToken.token);

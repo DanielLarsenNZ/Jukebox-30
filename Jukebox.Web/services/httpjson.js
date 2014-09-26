@@ -26,7 +26,7 @@
         options.port = parsedUrl.port;
         options.path = parsedUrl.path;
 
-        console.log("httpjson request", options, data);
+        console.log("httpjson request", url);
 
         var req = http.request(options, function(res) {
             var output = '';

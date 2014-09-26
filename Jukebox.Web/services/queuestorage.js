@@ -14,7 +14,7 @@
                 return;
             }
 
-            console.log("queued message", queue, message);
+            console.log("queued message on ", queue);
             callback(null);
             return;
         });
