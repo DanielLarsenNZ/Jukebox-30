@@ -60,7 +60,16 @@ Hacking on Azure
 	- Table Storage
 	- GitHub deploy
 		- Project=Jukebox.Web (Kudu)
-	- Deploying WebJobs (App_Data folder/ Publish wizard, etc)
+	- Deploying WebJobs (App_Data folder/ )
+		- Publish wizard DNG
+		- Post-build step
+	
+	PRICING
+	- Free website
+	- Shared website = $13/mo => 18/mo (+33%) (custom domain name, auto scale)
+	- Basic website w/ Always On = $72/mo
+	- Standard Scheduler = $18/mo (1 min)
+	- Web Role (Cloud Service) = $19/mo
 	
 210	OUTRO
 	- Recap
