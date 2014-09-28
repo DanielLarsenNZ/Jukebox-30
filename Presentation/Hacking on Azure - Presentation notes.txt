@@ -53,6 +53,10 @@ Hacking on Azure
 	- Azure Storage Explorer
 	- Streaming logs
 		- Turn on File logging - Information level
+
+???	TABLE STORAGE
+	- When querying, there is no order by, but results are sorted by Partition Key, then Row Key.
+
 		
 205	JUKEBOX.WEBJOBS
 	- WebJobs SDK
@@ -60,9 +64,13 @@ Hacking on Azure
 	- Table Storage
 	- GitHub deploy
 		- Project=Jukebox.Web (Kudu)
+			- use .deployment file: https://github.com/projectkudu/kudu/wiki/Customizing-deployments
 	- Deploying WebJobs (App_Data folder/ )
 		- Publish wizard DNG
 		- Post-build step
+	
+	- Logging
+		- http://blog.amitapple.com/post/2014/06/azure-website-logging/
 	
 	PRICING
 	- Free website

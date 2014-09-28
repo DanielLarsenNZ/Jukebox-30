@@ -41,6 +41,7 @@ app.get('/users', user.list);
 
 // dan's routes
 app.post('/api/jukeboxes', api.createJukebox);
+app.get('/api/jukeboxes', api.listJukeboxes);
 app.get('/api/playlists', api.getPlaylists);
 app.post('/api/jukeboxes/:id/tracks', api.importPlaylist);
 

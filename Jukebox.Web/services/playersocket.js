@@ -6,7 +6,7 @@
     });
     socket.on('next', function(jukeboxId) {
         console.log('next', jukeboxId);
-        play(socket, encodeURIComponent(jukeboxId));
+        play(socket, jukeboxId);
     });
 };
 
