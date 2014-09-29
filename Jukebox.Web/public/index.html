@@ -1,48 +1,65 @@
 ﻿<!DOCTYPE html>
-<html>
-    <head>
-        <title>Jukebox</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link href="/css/bootstrap.css" rel="stylesheet" />
-        <link href="/css/site.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/css/csspinner.css" />
+<html ng-app>
+<head>
+    <title>Jukebox</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/csspinner.css" />
 
-        <script src=" /scripts/modernizr-2.6.2.js"></script>
-        
-        <!-- Insights -->
-        <script type="text/javascript">
-            window.appInsights = window.appInsights || function (ai) {
-                function f(t) { ai[t] = function () { var i = arguments; ai.queue.push(function () { ai[t].apply(ai, i) }) } }
-                var t = document, r = "script", u = t.createElement(r), i; for (u.src = ai.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", t.getElementsByTagName(r)[0].parentNode.appendChild(u), ai.cookie = t.cookie, ai.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) f("track" + i.pop());
-                return ai;
-            }({
-                iKey: "76892f11-11f2-47ff-b2aa-ce42273ceb7d"
-            });
-            appInsights.trackPageView();
-        </script>
-    </head>
-    <body>
-        <div class="container body-content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="jumbotron">
-                            <h1>Jukebox</h1>
+    <script src=" /scripts/modernizr-2.6.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
+    <script src="/scripts/controllers/indexController.js"></script>
 
-                            <div class="panel panel-default">
-                                <div class="panel-body">
+    <!-- Insights -->
+    <script type="text/javascript">
+        window.appInsights = window.appInsights || function (ai) {
+            function f(t) { ai[t] = function () { var i = arguments; ai.queue.push(function () { ai[t].apply(ai, i) }) } }
+            var t = document, r = "script", u = t.createElement(r), i; for (u.src = ai.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", t.getElementsByTagName(r)[0].parentNode.appendChild(u), ai.cookie = t.cookie, ai.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) f("track" + i.pop());
+            return ai;
+        }({
+            iKey: "76892f11-11f2-47ff-b2aa-ce42273ceb7d"
+        });
+        appInsights.trackPageView();
+    </script>
+</head>
+<body>
+    <div class="container body-content" ng-controller="indexController">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="jumbotron">
+                        <h1>Jukebox</h1>
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h2>Create your own Jukebox</h2>
+
+                                <div class="form-group">
+                                    <label for="name">Enter name for your Jukebox</label>
+                                    <input type="text" class="form-control" id="name" ng-model="name">
+                                </div>
+
+                                <button ng-click="createJukebox()" class="btn btn-success">Go</button>
+                                
+                                <div class="container" ng-show="jukeboxes.length > 0">
+                                    <h2>Or listen to someone else's....</h2>
+
                                     <table class="table">
-                                        <caption>Now playing...</caption>
                                         <thead>
                                             <tr>
                                                 <th>Jukebox</th>
+                                                <th>Started</th>
+                                                <th>Tracks</th>
+                                                <th>Listeners</th>
+                                                <th>Now playing</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <tr ng-repeat="jukebox in jukeboxes">
                                                 <td>
-                                                    <a href=" /jukebox.html">Code Camp 2014</a>
+                                                    <a href="/jukebox.html?id={{ jukebox.RowKey }}">{{ jukebox.name }}</a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -53,15 +70,34 @@
                     </div>
                 </div>
             </div>
-
-            <hr />
-            <footer>
-                <p><a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure">https://github.com/DanielLarsenNZ/Hacking-on-Azure</a></p>
-            </footer>
         </div>
 
-        <script src=" /scripts/jquery-1.10.2.js"></script>
-        <script src=" /scripts/bootstrap.js"></script>
-        <script src=" /scripts/respond.js"></script>
-    </body>
+        <div class="row" ng-show="loading">
+            <div class="col-md-6">
+                <div class="jumbotron">
+                    <h1>Loading...</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="error">
+            <div class="col-md-6">
+                <div class="alert alert-danger" role="alert">
+                    <strong>Error!</strong> {{ error }}
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <footer>
+            <p><a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure">https://github.com/DanielLarsenNZ/Hacking-on-Azure</a></p>
+        </footer>
+    </div>
+
+    <script src=" /scripts/jquery-1.10.2.js"></script>
+    <script src=" /scripts/bootstrap.js"></script>
+    <script src=" /scripts/respond.js"></script>
+</body>
 </html>
+

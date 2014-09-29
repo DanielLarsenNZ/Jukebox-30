@@ -85,28 +85,30 @@
                     </div>
                 </div>
 
-                        <div class="row" ng-show="loading">
-                            <div class="col-md-6">
-                                <div class="jumbotron">
-                                    <h1>Loading...</h1>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" ng-show="error">
-                            <div class="col-md-6">
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>Error!</strong> {{ error }}
-                                </div>
-                            </div>
+                <div class="row" ng-show="loading">
+                    <div class="col-md-6">
+                        <div class="jumbotron">
+                            <h1>Loading...</h1>
                         </div>
                     </div>
-
-                    <hr />
-                    <footer>
-                        <p><a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure">https://github.com/DanielLarsenNZ/Hacking-on-Azure</a></p>
-                    </footer>
                 </div>
+
+                <div class="row" ng-show="error">
+                    <div class="col-md-6">
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Error!</strong> {{ error }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <footer>
+                <p><a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure">https://github.com/DanielLarsenNZ/Hacking-on-Azure</a></p>
+            </footer>
+
+        </div>
 
         <script src="/scripts/jquery-1.10.2.js"></script>
         <script src="/scripts/bootstrap.js"></script>

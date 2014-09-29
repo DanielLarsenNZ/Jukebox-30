@@ -36,6 +36,7 @@
     <Compile Include="newrelic.js" />
     <Compile Include="public\scripts\bootstrap.js" />
     <Compile Include="public\scripts\bootstrap.min.js" />
+    <Compile Include="public\scripts\controllers\indexController.js" />
     <Compile Include="public\scripts\controllers\jukeboxController.js" />
     <Compile Include="public\scripts\jquery-1.10.2.js" />
     <Compile Include="public\scripts\modernizr-2.6.2.js" />
