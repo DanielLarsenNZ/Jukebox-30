@@ -26,65 +26,63 @@
 </head>
 <body>
     <div class="container body-content" ng-controller="indexController">
+        <div class="page-header">
+            <h1>Jukebox 30</h1>
+            <p>Listen to 30 second previews of Spotify tracks with your friends.</p>
+        </div>
+
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="jumbotron">
-                        <h1>Jukebox</h1>
-
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <h2>Create your own Jukebox</h2>
-
-                                <div class="form-group">
-                                    <label for="name">Enter name for your Jukebox</label>
-                                    <input type="text" class="form-control" id="name" ng-model="name">
-                                </div>
-
-                                <button ng-click="createJukebox()" class="btn btn-success">Go</button>
-                                
-                                <div class="container" ng-show="jukeboxes.length > 0">
-                                    <h2>Or listen to someone else's....</h2>
-
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Jukebox</th>
-                                                <th>Started</th>
-                                                <th>Tracks</th>
-                                                <th>Listeners</th>
-                                                <th>Now playing</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="jukebox in jukeboxes">
-                                                <td>
-                                                    <a href="/jukebox.html?id={{ jukebox.RowKey }}">{{ jukebox.name }}</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <h3>Start your own Jukebox</h3>
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label for="name" class="sr-only">Jukebox name</label>
+                    <input type="text" class="form-control" id="name" ng-model="name" placeholder="Jukebox name">
                 </div>
+                <div class="form-group">
+                    <label for="name" class="sr-only">Spotify username</label>
+                    <input type="text" class="form-control" id="spotifyUsername" ng-model="spotifyUsername" placeholder="Spotify username">
+                </div>
+                <button ng-click="createJukebox()" class="btn btn-success">Go</button>
+            </form>
+            
+            <div class="csspinner"
+                 ng-show="loading">
+                Loading...
+            </div>
+
+            <div ng-show="jukeboxes.length > 0">
+                <h3>Or listen to someone else's....</h3>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Jukebox</th>
+                            <th>Started</th>
+                            <th>Tracks</th>
+                            <th>Listeners</th>
+                            <th>Now playing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="jukebox in jukeboxes">
+                            <td>
+                                <a href="/jukebox.html?id={{ jukebox.RowKey }}">{{ jukebox.name }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="row" ng-show="loading">
-            <div class="col-md-6">
-                <div class="jumbotron">
-                    <h1>Loading...</h1>
-                </div>
+        <div class="row" ng-show="">
+            <div class="alert alert-info" role="alert">
+                Loading...
             </div>
         </div>
 
         <div class="row" ng-show="error">
-            <div class="col-md-6">
-                <div class="alert alert-danger" role="alert">
-                    <strong>Error!</strong> {{ error }}
-                </div>
+            <div class="alert alert-danger" role="alert">
+                <strong>Error!</strong> {{ error }}
             </div>
         </div>
 
