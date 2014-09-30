@@ -16,8 +16,7 @@
         $http.post('/api/jukeboxes', { name: $scope.name, spotifyUsername: $scope.spotifyUsername }).success(function (data) {
             
             $scope.loading = false;
-            //$scope.jukeboxes.push(data);
-
+            $scope.jukeboxes.push(data);
             document.location = '/jukebox.html?id=' + data.RowKey;
 
         }).error(function (data) {
