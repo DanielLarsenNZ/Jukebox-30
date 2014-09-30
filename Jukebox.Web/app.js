@@ -36,19 +36,18 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//app.get('/', routes.index);
 app.get('/users', user.list);
 
 // dan's routes
 app.post('/api/jukeboxes', api.createJukebox);
 app.get('/api/jukeboxes', api.listJukeboxes);
+app.get('/api/jukeboxes/:id', api.getJukebox);
 app.get('/api/playlists', api.getPlaylists);
 app.post('/api/jukeboxes/:id/tracks', api.importPlaylist);
 
 var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
-
 
 // socket.io
 var io = require('socket.io').listen(server);

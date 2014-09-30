@@ -60,8 +60,12 @@
                     <tbody>
                         <tr ng-repeat="jukebox in jukeboxes">
                             <td>
-                                <a href="/jukebox.html?id={{ jukebox.RowKey }}">{{ jukebox.name }}</a>
+                                <a href="/jukebox.html#?id={{ jukebox.id }}">{{ jukebox.name }}</a>
                             </td>
+                            <td>{{ jukebox.whenCreated }}</td>
+                            <td>{{ jukebox.tracks }}</td>
+                            <td>{{ jukebox.listeners }}</td>
+                            <td>{{ jukebox.nowPlaying }}</td>
                         </tr>
                     </tbody>
                 </table>

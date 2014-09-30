@@ -3,8 +3,19 @@
     // creates a Jukebox and returns the id
 exports.createJukebox = function(req, res) {
     var storage = require('../services/tablestorage.js');
+    var uuid = require('node-uuid');
+    
+    var uid = uuid.v4();    
     var name = req.param('name');
-    var jukebox = { name: name, RowKey: encodeURIComponent(name), PartitionKey: getPartitionKey() };
+    var jukebox = {
+        id: uid,
+        name: name,
+        RowKey: uid,
+        PartitionKey: getPartitionKey(),
+        spotifyUsername: req.param('spotifyUsername'),
+        whenCreated: new Date()
+    };
+
     storage.insert("jukebox", jukebox,
         function(error) {
             if (error) {
@@ -21,6 +32,7 @@ exports.createJukebox = function(req, res) {
 exports.listJukeboxes = function(req, res) {
     var storage = require('../services/tablestorage.js');
     var azure = require('azure');
+
     storage.get("jukebox", new azure.TableQuery()
         .top(20)
         .from("jukebox")
@@ -32,6 +44,25 @@ exports.listJukeboxes = function(req, res) {
         
         console.log("got jukeboxes", jukeboxes.length);
         res.json(jukeboxes);        
+        return;
+    });
+};
+
+// GET /api/jukeboxes/:id
+// retrieves a jukeboxe
+exports.getJukebox = function(req, res) {
+    var storage = require('../services/tablestorage.js');
+    var azure = require('azure');
+    storage.get("jukebox", new azure.TableQuery()
+        .from("jukebox")
+        .where('RowKey eq ?', req.param("id")), function (error, jukebox) {
+        if (error) {
+            console.log(error);
+            return;
+        }
+        
+        console.log("got jukebox");
+        res.json(jukebox);
         return;
     });
 };

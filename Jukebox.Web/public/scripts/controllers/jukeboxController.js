@@ -1,13 +1,30 @@
-﻿function jukeboxController($scope, $http) {
+﻿function jukeboxController($scope, $http, $location) {
 
-    $scope.loading = false;
+    $scope.loading = true;
     $scope.chooseMusic = false;
     $scope.choosePlaylists = false;
     $scope.finished = false;
 
     $scope.jukebox = {};
     $scope.spotify = { userId: null, playlists: [] };
-    
+
+//    var search = $location.search("id", "foo");
+//    console.log(search);
+//    console.log(search.toString());
+
+    $http.get('/api/jukeboxes/' + $location.search().id).success(function (data) {
+        $scope.jukebox = data[0];
+        $scope.spotify = { userId: $scope.jukebox.spotifyUsername, playlists: [] };
+        if ($scope.spotify.userId) {
+            $scope.getPlaylists();
+        } else {
+            $scope.loading = false;    
+        }
+    }).error(function (data) {
+        $scope.error = data;
+        $scope.loading = false;
+    });
+
     $scope.getPlaylists = function () {
         $scope.error = null;
         $scope.loading = true;

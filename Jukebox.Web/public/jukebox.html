@@ -24,156 +24,141 @@
             appInsights.trackPageView();
         </script>
     </head>
-    <body>
-        <div class="container body-content">
-            <h1>Jukebox</h1>
-
-            <div class="container" ng-controller="jukeboxController">
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="container">
-                            <button id="playButton" class="btn btn-success">Play</button>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="container">
-                            <h2>Choose some music...</h2>
-
-                            <div class="form-group">
-                                <label for="spotifyUsername">Enter a Spotify Username</label>
-                                <input type="text" class="form-control" id="spotifyUsername" ng-model="spotify.userId">
-                            </div>
-
-                            <button ng-click="getPlaylists()" class="btn btn-success">Go</button>
-
-                            <div class="container" ng-show="choosePlaylists">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Playlist <span class="badge pull-right">tracks</span></th>
-                                            <th>By</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="playlist in spotify.playlists" ng-show="playlist.id">
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ playlist.name }} <span class="badge pull-right">{{ playlist.tracks.total }}</span></td>
-                                            <td>{{ playlist.owner.id }}</td>
-                                            <td>
-                                                <button class="btn btn-success" ng-click="addPlaylist(playlist)"
-                                                        ng-disabled="playlist.Add">
-                                                    Add
-                                                </button>
-                                                <div class="csspinner bar"
-                                                     ng-show="playlist.Loading">
-                                                    Loading...
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" ng-show="loading">
-                    <div class="col-md-6">
-                        <div class="jumbotron">
-                            <h1>Loading...</h1>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" ng-show="error">
-                    <div class="col-md-6">
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Error!</strong> {{ error }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <hr />
-
-            <footer>
-                <p><a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure">https://github.com/DanielLarsenNZ/Hacking-on-Azure</a></p>
-            </footer>
-
+<body>
+    <div class="container body-content" ng-controller="jukeboxController">
+        <div class="page-header">
+            <h1>Jukebox 30</h1>
+            <p>Listen to 30 second previews of Spotify tracks with your friends.</p>
         </div>
 
-        <script src="/scripts/jquery-1.10.2.js"></script>
-        <script src="/scripts/bootstrap.js"></script>
-        <script src="/scripts/respond.js"></script>
-        
-        
-        <script src="/socket.io/socket.io.js"></script>
-        <script>
-            var socket = io();
-            var _track;
-            $('#playButton').click(function () {
-                console.log("playButton.click");
-                socket.emit('next', 'codecamp2014'); //TODO: jukeboxId
-            });
-            
-            socket.on('play', function (track) {
-                _track = track;
-                console.log('play ' + track.url + ' cue = ' + getCue(track) + ' start time = ' + track.startTime + '. Duration = ' + track.duration);
-                play();
-            });
+        <h2>{{ jukebox.name }} <button id="playButton" class="btn btn-success" ng-disabled="loading">Play</button> </h2> 
 
-            var getCue = function (track) {
-                return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
-            };
 
-            var audio = null;
+        <h3>Add music to the Jukebox</h3>
 
-            // plays an audio track from url starting at cue
-            // For an advanced player implementation see https://github.com/possan/webapi-player-example/blob/master/services/playback.js
-            // http://www.w3schools.com/tags/ref_av_dom.asp
-            var play = function () {
-                if (audio != null) {
-                    audio.pause();
-                    delete (audio);
-                    audio = null;
+        <form role="form" class="form-inline">
+            <div class="form-group">
+                <label for="spotifyUsername" class="sr-only">Enter a Spotify Username</label>
+                <input type="text" class="form-control" id="spotifyUsername" ng-model="spotify.userId" placeholder="Spotify username" 
+                       required>
+            </div>
+
+            <button ng-click="getPlaylists()" class="btn btn-success" ng-disabled="!spotify.userId">Go</button>
+        </form>
+
+        <table class="table table-hover" ng-show="choosePlaylists">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Playlist <span class="badge pull-right">tracks</span></th>
+                    <th>By</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="playlist in spotify.playlists" ng-show="playlist.id">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ playlist.name }} <span class="badge pull-right">{{ playlist.tracks.total }}</span></td>
+                    <td>{{ playlist.owner.id }}</td>
+                    <td>
+                        <button class="btn btn-success" ng-click="addPlaylist(playlist)"
+                                ng-disabled="playlist.Add">
+                            Add
+                        </button>
+                        <div class="csspinner bar"
+                             ng-show="playlist.Loading">
+                            Loading...
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="spinner" ng-show="loading">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+
+        <div class="alert alert-danger" role="alert" ng-show="error">
+            <strong>Error!</strong> {{ error }}
+        </div>
+
+        <hr />
+
+        <footer>
+            <p><a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure">https://github.com/DanielLarsenNZ/Hacking-on-Azure</a></p>
+        </footer>
+
+    </div>
+
+    <script src="/scripts/jquery-1.10.2.js"></script>
+    <script src="/scripts/bootstrap.js"></script>
+    <script src="/scripts/respond.js"></script>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        var _track;
+        $('#playButton').click(function () {
+            console.log("playButton.click");
+            socket.emit('next', 'codecamp2014'); //TODO: jukeboxId
+        });
+
+        socket.on('play', function (track) {
+            _track = track;
+            console.log('play ' + track.url + ' cue = ' + getCue(track) + ' start time = ' + track.startTime + '. Duration = ' + track.duration);
+            play();
+        });
+
+        var getCue = function (track) {
+            return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
+        };
+
+        var audio = null;
+
+        // plays an audio track from url starting at cue
+        // For an advanced player implementation see https://github.com/possan/webapi-player-example/blob/master/services/playback.js
+        // http://www.w3schools.com/tags/ref_av_dom.asp
+        var play = function () {
+            if (audio != null) {
+                audio.pause();
+                delete (audio);
+                audio = null;
+            }
+
+            audio = new Audio(_track.url);
+            //TODO: Attach to DOM and show controls ?
+            audio.controls = "controls";
+
+            audio.addEventListener('loadedmetadata', function () {
+                console.log('audio loadedmetadata');
+                //audio.play();
+            }, false);
+
+            audio.addEventListener('canplay', function () {
+                var cue = getCue(_track);
+                console.log('audio canplay', audio.currentTime);
+                if (cue > 0 && audio.currentTime == 0) {
+                    audio.currentTime = cue / 1000;
+                    console.log('audio canplay', cue / 1000, audio.currentTime);
+                    audio.play();
                 }
 
-                audio = new Audio(_track.url);
-                //TODO: Attach to DOM and show controls ?
-                audio.controls = "controls";
+            }, false);
 
-                audio.addEventListener('loadedmetadata', function () {
-                    console.log('audio loadedmetadata');
-                    //audio.play();
-                }, false);
+            audio.addEventListener('ended', function () {
+                console.log('audio ended');
+                audio = null;
+                socket.emit('next', 'codecamp2014');
+            }, false);
+        };
 
-                audio.addEventListener('canplay', function () {
-                    var cue = getCue(_track);
-                    console.log('audio canplay', audio.currentTime);
-                    if (cue > 0 && audio.currentTime == 0) {
-                        audio.currentTime = cue / 1000;
-                        console.log('audio canplay', cue / 1000, audio.currentTime);
-                        audio.play();
-                    }
-                    
-                }, false );
+    </script>
 
-                audio.addEventListener('ended', function () {
-                    console.log('audio ended');
-                    audio = null;
-                    socket.emit('next', 'codecamp2014');
-                }, false);
-            };
+</body>
 
-        </script>
-
-    </body>
 </html>

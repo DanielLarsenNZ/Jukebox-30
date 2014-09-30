@@ -56,7 +56,7 @@ Hacking on Azure
 
 ???	TABLE STORAGE
 	- When querying, there is no order by, but results are sorted by Partition Key, then Row Key.
-
+	- Properties with default values are dropped.
 		
 205	JUKEBOX.WEBJOBS
 	- WebJobs SDK

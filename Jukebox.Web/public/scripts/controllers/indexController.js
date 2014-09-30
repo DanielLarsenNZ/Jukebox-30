@@ -17,7 +17,7 @@
             
             $scope.loading = false;
             $scope.jukeboxes.push(data);
-            document.location = '/jukebox.html?id=' + data.RowKey;
+            document.location = '/jukebox.html#?id=' + data.RowKey;
 
         }).error(function (data) {
             $scope.error = data;
