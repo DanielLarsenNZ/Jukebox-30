@@ -41,7 +41,7 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-/* Spinner */
+/* Spinner https://github.com/tobiasahlin/SpinKit */
 
 .spinner {
   margin: 100px auto;
