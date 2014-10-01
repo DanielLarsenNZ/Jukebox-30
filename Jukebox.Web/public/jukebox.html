@@ -1,29 +1,31 @@
 ﻿<!DOCTYPE html>
-<html ng-app>
-    <head>
-        <title>Jukebox</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link href="/css/bootstrap.css" rel="stylesheet" />
-        <link href="/css/site.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/css/csspinner.css" />
+<html ng-app="jukebox">
+<head>
+    <title>Jukebox</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/csspinner.css" />
 
-        <script src="/scripts/modernizr-2.6.2.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
-        <script src="/scripts/controllers/jukeboxController.js"></script>
-
-        <!-- Insights -->
-        <script type="text/javascript">
-            window.appInsights = window.appInsights || function (ai) {
-                function f(t) { ai[t] = function () { var i = arguments; ai.queue.push(function () { ai[t].apply(ai, i) }) } }
-                var t = document, r = "script", u = t.createElement(r), i; for (u.src = ai.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", t.getElementsByTagName(r)[0].parentNode.appendChild(u), ai.cookie = t.cookie, ai.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) f("track" + i.pop());
-                return ai;
-            }({
-                iKey: "76892f11-11f2-47ff-b2aa-ce42273ceb7d"
-            });
-            appInsights.trackPageView();
-        </script>
-    </head>
+    <script src="/scripts/modernizr-2.6.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/services/socketservice.js"></script>
+    <script src="/scripts/controllers/jukeboxController.js"></script>
+    <!-- Insights -->
+    <script type="text/javascript">
+        window.appInsights = window.appInsights || function (ai) {
+            function f(t) { ai[t] = function () { var i = arguments; ai.queue.push(function () { ai[t].apply(ai, i) }) } }
+            var t = document, r = "script", u = t.createElement(r), i; for (u.src = ai.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", t.getElementsByTagName(r)[0].parentNode.appendChild(u), ai.cookie = t.cookie, ai.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) f("track" + i.pop());
+            return ai;
+        }({
+            iKey: "76892f11-11f2-47ff-b2aa-ce42273ceb7d"
+        });
+        appInsights.trackPageView();
+    </script>
+</head>
 <body>
     <div class="container body-content" ng-controller="jukeboxController">
         <div class="page-header">
@@ -31,7 +33,7 @@
             <p>Listen to 30 second previews of Spotify tracks with your friends.</p>
         </div>
 
-        <h2>{{ jukebox.name }} <button id="playButton" class="btn btn-success" ng-disabled="loading">Play</button> </h2> 
+        <h2>{{ jukebox.name }} <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()">Play</button> </h2>
 
 
         <h3>Add music to the Jukebox</h3>
@@ -39,7 +41,7 @@
         <form role="form" class="form-inline">
             <div class="form-group">
                 <label for="spotifyUsername" class="sr-only">Enter a Spotify Username</label>
-                <input type="text" class="form-control" id="spotifyUsername" ng-model="spotify.userId" placeholder="Spotify username" 
+                <input type="text" class="form-control" id="spotifyUsername" ng-model="spotify.userId" placeholder="Spotify username"
                        required>
             </div>
 
@@ -97,68 +99,7 @@
     <script src="/scripts/jquery-1.10.2.js"></script>
     <script src="/scripts/bootstrap.js"></script>
     <script src="/scripts/respond.js"></script>
-
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io();
-        var _track;
-        $('#playButton').click(function () {
-            console.log("playButton.click");
-            socket.emit('next', 'codecamp2014'); //TODO: jukeboxId
-        });
-
-        socket.on('play', function (track) {
-            _track = track;
-            console.log('play ' + track.url + ' cue = ' + getCue(track) + ' start time = ' + track.startTime + '. Duration = ' + track.duration);
-            play();
-        });
-
-        var getCue = function (track) {
-            return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
-        };
-
-        var audio = null;
-
-        // plays an audio track from url starting at cue
-        // For an advanced player implementation see https://github.com/possan/webapi-player-example/blob/master/services/playback.js
-        // http://www.w3schools.com/tags/ref_av_dom.asp
-        var play = function () {
-            if (audio != null) {
-                audio.pause();
-                delete (audio);
-                audio = null;
-            }
-
-            audio = new Audio(_track.url);
-            //TODO: Attach to DOM and show controls ?
-            audio.controls = "controls";
-
-            audio.addEventListener('loadedmetadata', function () {
-                console.log('audio loadedmetadata');
-                //audio.play();
-            }, false);
-
-            audio.addEventListener('canplay', function () {
-                var cue = getCue(_track);
-                console.log('audio canplay', audio.currentTime);
-                if (cue > 0 && audio.currentTime == 0) {
-                    audio.currentTime = cue / 1000;
-                    console.log('audio canplay', cue / 1000, audio.currentTime);
-                    audio.play();
-                }
-
-            }, false);
-
-            audio.addEventListener('ended', function () {
-                console.log('audio ended');
-                audio = null;
-                socket.emit('next', 'codecamp2014');
-            }, false);
-        };
-
-    </script>
-
 </body>
 
 </html>
+

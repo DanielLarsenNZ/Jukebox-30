@@ -10,15 +10,16 @@
     });
 };
 
-var _currentTrack = null;
+var _currentTrack = [];
 
 var play = function(socket, jukeboxId) {
     // if track in progress, return details
-    if (_currentTrack) {
-        if (isPlaying()) {
+    var track = getTrack(jukeboxId);
+    if (track) {
+        if (isPlaying(track)) {
             // track is playing
-            socket.emit("play", _currentTrack);
-            console.log("play", _currentTrack);
+            socket.emit("play", track);
+            console.log("play", track);
             return;
         }
     }
@@ -34,34 +35,39 @@ var play = function(socket, jukeboxId) {
                 return;
             }
 
-            console.log("got tracks", tracks.length);
-            select(tracks);
-            socket.emit("play", _currentTrack);
-            return;
-        });
+        console.log("got tracks", tracks.length);
+        if (tracks.length == 0) return;
+        setTrack(jukeboxId, select(tracks));
+        socket.emit("play", getTrack(jukeboxId));
+        return;
+    });
     return;
 };
 
 var select = function(tracks) {
     var index = (Math.floor(Math.random() * (tracks.length - 1)) + 1) - 1;
     console.log("selected from tracks", index, tracks.length);
-    //TODO: setTrack(tracks[index].PreviewUrl, tracks[index].Duration);
-    setTrack(tracks[index].PreviewUrl, 30000);
-};
-
-var setTrack = function(url, duration) {
-    _currentTrack = {
-        url: url,
-        duration: duration,
+    
+    return {
+        url: tracks[index].PreviewUrl,
+        duration: 30000,                //TODO: tracks[index].Duration
         startTime: new Date()
-    };
+    };    
 };
 
-var isPlaying = function () {
-    var cue = getCue();
-    return (cue < _currentTrack.duration);
+var getTrack = function(jukeboxId) {
+    return _currentTrack[jukeboxId];
+}
+
+var setTrack = function(jukeboxId, track) {
+    _currentTrack[jukeboxId] = track;
 };
 
-var getCue = function() {
-    return Math.min(new Date().getTime() - _currentTrack.startTime.getTime(), _currentTrack.duration);
+var isPlaying = function (track) {
+    var cue = getCue(track);
+    return (cue < track.duration);
+};
+
+var getCue = function(track) {
+    return Math.min(new Date().getTime() - track.startTime.getTime(), track.duration);
 };

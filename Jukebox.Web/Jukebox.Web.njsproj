@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="newrelic.js" />
+    <Compile Include="public\scripts\app.js" />
     <Compile Include="public\scripts\bootstrap.js" />
     <Compile Include="public\scripts\bootstrap.min.js" />
     <Compile Include="public\scripts\controllers\indexController.js" />
@@ -41,6 +42,7 @@
     <Compile Include="public\scripts\jquery-1.10.2.js" />
     <Compile Include="public\scripts\modernizr-2.6.2.js" />
     <Compile Include="public\scripts\respond.js" />
+    <Compile Include="public\scripts\services\socketservice.js" />
     <Compile Include="routes\api.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="routes\user.js" />
@@ -62,6 +64,7 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="public\scripts\controllers\" />
+    <Folder Include="public\scripts\services\" />
     <Folder Include="services\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />

@@ -53,6 +53,7 @@ Hacking on Azure
 	- Azure Storage Explorer
 	- Streaming logs
 		- Turn on File logging - Information level
+	- Socket.io and Angularjs - http://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
 
 ???	TABLE STORAGE
 	- When querying, there is no order by, but results are sorted by Partition Key, then Row Key.
