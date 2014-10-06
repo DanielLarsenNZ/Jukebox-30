@@ -81,7 +81,7 @@ app.controller('jukeboxController', ['$scope', '$http', '$location', 'socket', f
 
         $scope.start = function() {
             console.log("playButton.click");
-            socket.emit('next', $scope.jukebox.id);
+            socket.emit('join', $scope.jukebox.id);
         };
 
         $scope.getPlaylists = function() {
