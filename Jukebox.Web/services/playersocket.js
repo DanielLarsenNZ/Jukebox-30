@@ -33,8 +33,17 @@ var poll = function (io) {
 
 var _currentTrack = [];
 
-var checkTrack = function(io, jukeboxId)
-{
+var checkTrack = function(io, jukeboxId) {
+    console.log("checkTrack", jukeboxId);
+    
+    // if the room is empty, stop playing this jukebox
+    var room = io.nsps["/"].adapter.rooms[jukeboxId];
+    if (Object.keys(room).length == 0) {
+        console.log("no room for jukeboxId. Stopping.", jukeboxId);
+        delete _jukeboxes[jukeboxId];
+        return;
+    }
+
     // if track has less than 15 seconds to play, select a new track and emit it
     var track = getTrack(jukeboxId); 
     //TODO: //if (!track || getCue(track) > track.duration - 15000) {
