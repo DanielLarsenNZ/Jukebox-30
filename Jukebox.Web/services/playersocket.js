@@ -37,7 +37,8 @@ var checkTrack = function(io, jukeboxId)
 {
     // if track has less than 15 seconds to play, select a new track and emit it
     var track = getTrack(jukeboxId); 
-    if (!track || getCue(track) < 15000) {
+    //TODO: //if (!track || getCue(track) > track.duration - 15000) {
+    if (!track || getCue(track) > 15000) {
         // get tracks from storage. This is the same cost as a message queue check, up to 1000 entities.
         var storage = require('./tablestorage.js');
         var azure = require('azure');
@@ -54,8 +55,11 @@ var checkTrack = function(io, jukeboxId)
             if (tracks.length == 0) return;
             track = select(track, tracks);
             setTrack(jukeboxId, track);
-            io.emit("play", track);
-            console.log("emit play", track);
+
+            io.to(jukeboxId).emit('play', track);
+            //io.emit("play", track);
+
+            console.log("emit to play", jukeboxId, track);
 
             return;
         });
@@ -66,7 +70,8 @@ var select = function(track, tracks) {
     var index = (Math.floor(Math.random() * (tracks.length - 1)) + 1) - 1;
     console.log("selected from tracks", index, tracks.length);
 
-    var startTime = new Date(track ? track.startTime.getTime() + tracks[index].duration : new Date().getTime() + 10000);
+    //TODO: //var startTime = new Date(track ? track.startTime + tracks[index].duration : new Date().getTime() + 10000);
+    var startTime = new Date(track ? track.startTime.getTime() + 30000 : new Date().getTime() + 10000);
 
     return {
         url: tracks[index].PreviewUrl,
@@ -89,5 +94,7 @@ var isPlaying = function (track) {
 };
 
 var getCue = function(track) {
-    return Math.min(new Date().getTime() - track.startTime.getTime(), track.duration);
+    var cue = Math.min(new Date().getTime() - track.startTime.getTime(), track.duration);
+    console.log("track cue", cue);
+    return cue;
 };

@@ -111,5 +111,5 @@ exports.importPlaylist = function (req, res) {
 
 var getPartitionKey = function () {
     // current simple implementation returns integer representation of today's date, i.e. number of days since 1970.
-    return parseInt(Date.now() / 1000 / 60 / 60 / 24).toString();
+    return parseInt((Date.now() - (24*60*60*1000)) / 1000 / 60 / 60 / 24).toString();
 };

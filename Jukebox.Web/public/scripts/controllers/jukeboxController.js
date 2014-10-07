@@ -1,81 +1,91 @@
 ﻿//function jukeboxController($scope, $http, $location, socket) {
-app.controller('jukeboxController', ['$scope', '$http', '$location', 'socket', function($scope, $http, $location, socket) {
-        console.log($scope);
+app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout', 'socket', 
+    function ($scope, $http, $location, $timeout, socket) {
+    console.log($scope);
 
-        $scope.loading = true;
-        $scope.chooseMusic = false;
-        $scope.choosePlaylists = false;
-        $scope.finished = false;
+    $scope.loading = true;
+    $scope.playlistsLoading = false;
+    $scope.chooseMusic = false;
+    $scope.choosePlaylists = false;
+    $scope.finished = false;
 
-        $scope.jukebox = {};
-        $scope.spotify = { userId: null, playlists: [] };
+    $scope.jukebox = {};
+    $scope.spotify = { userId: null, playlists: [] };
 
-        $http.get('/api/jukeboxes/' + $location.search().id).success(function(data) {
-            $scope.jukebox = data[0];
-            $scope.spotify = { userId: $scope.jukebox.spotifyUsername, playlists: [] };
-            if ($scope.spotify.userId) {
-                $scope.getPlaylists();
-            } else {
-                $scope.loading = false;
-            }
-        }).error(function(data) {
-            $scope.error = data;
-            $scope.loading = false;
-        });
+    $http.get('/api/jukeboxes/' + $location.search().id).success(function(data) {
+        $scope.jukebox = data[0];
+        $scope.spotify = { userId: $scope.jukebox.spotifyUsername, playlists: [] };
+        
+        $scope.loading = false;
+        
+        if ($scope.spotify.userId) {
+            $scope.getPlaylists();
+        }
+         
+    }).error(function(data) {
+        $scope.error = data;
+        $scope.loading = false;
+    });
+
 
 // socket.io
 
-        var _track;
-
         socket.on('play', function(track) {
-            _track = track;
             console.log('play ' + track.url + ' cue = ' + getCue(track) + ' start time = ' + track.startTime + '. Duration = ' + track.duration);
-            play();
+            play(track);
         });
 
         var getCue = function(track) {
             return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
         };
 
-        var audio = null;
+        //var audios = [];
 
 // plays an audio track from url starting at cue
 // For an advanced player implementation see 
 // https://github.com/possan/webapi-player-example/blob/master/services/playback.js
 // http://www.w3schools.com/tags/ref_av_dom.asp
-        var play = function() {
+    var play = function (track) {
+        console.log("play", track);
+
+        var audio = new Audio(track.url);
+        //TODO: Attach to DOM and show controls ?
+        audio.controls = "controls";
+
+        audio.addEventListener('loadedmetadata', function() {
+            console.log('audio loadedmetadata');
+            //audio.play();
+        }, false);
+
+        audio.addEventListener('canplay', function() {
+            console.log('audio canplay', audio.currentTime);
+            //var cue = getCue(track);
+            
+//            if (cue > 0 && audio.currentTime == 0) {
+//                audio.currentTime = cue / 1000;
+//                console.log('audio canplay', cue / 1000, audio.currentTime);
+//                //audio.play();
+//            }
+            
+        }, false);
+
+        audio.addEventListener('ended', function() {
+            console.log('audio ended', audio);
             if (audio != null) {
                 audio.pause();
                 delete (audio);
                 audio = null;
             }
+            //socket.emit('next', $scope.jukebox.id);
+        }, false);
+        
+        // set timer to push play at track.startTime;
+        var now = new Date();
+        var timeout = Math.max(now.getTime(), new Date(track.startTime).getTime()) - now.getTime();
+        console.log("playing in ", timeout);
+        $timeout(function() { audio.play(); }, timeout);
+    };
 
-            audio = new Audio(_track.url);
-            //TODO: Attach to DOM and show controls ?
-            audio.controls = "controls";
-
-            audio.addEventListener('loadedmetadata', function() {
-                console.log('audio loadedmetadata');
-                //audio.play();
-            }, false);
-
-            audio.addEventListener('canplay', function() {
-                var cue = getCue(_track);
-                console.log('audio canplay', audio.currentTime);
-                if (cue > 0 && audio.currentTime == 0) {
-                    audio.currentTime = cue / 1000;
-                    console.log('audio canplay', cue / 1000, audio.currentTime);
-                    audio.play();
-                }
-
-            }, false);
-
-            audio.addEventListener('ended', function() {
-                console.log('audio ended');
-                audio = null;
-                socket.emit('next', $scope.jukebox.id);
-            }, false);
-        };
 
 // /socket.io
 
@@ -86,15 +96,15 @@ app.controller('jukeboxController', ['$scope', '$http', '$location', 'socket', f
 
         $scope.getPlaylists = function() {
             $scope.error = null;
-            $scope.loading = true;
+            $scope.playlistsLoading = true;
 
             $http.get('/api/playlists?username=' + $scope.spotify.userId).success(function(data) {
                 $scope.spotify.playlists = data.items;
-                $scope.loading = false;
+                $scope.playlistsLoading = false;
                 $scope.choosePlaylists = true;
             }).error(function(data) {
                 $scope.error = data.error.message;
-                $scope.loading = false;
+                $scope.playlistsLoading = false;
             });
         };
 
