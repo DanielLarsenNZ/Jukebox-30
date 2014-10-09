@@ -89,7 +89,12 @@ var select = function(track, tracks) {
     }
 
     return {
+        id: tracks[index].Id,
         url: tracks[index].PreviewUrl,
+        name: tracks[index].Name,
+        artist: tracks[index].Artist,
+        album: tracks[index].Album,
+        imageUrl: tracks[index].ImageUrl,
         duration: 30000, //TODO: tracks[index].Duration
         startTime: startTime
     };  

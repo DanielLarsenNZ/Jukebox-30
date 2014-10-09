@@ -33,8 +33,16 @@
             <p>Listen to 30 second previews of Spotify tracks with your friends.</p>
         </div>
 
-        <h2>{{ jukebox.name }} <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()">Play</button> </h2>
-
+        <h2>
+            {{ jukebox.name }} <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()">Play</button>
+        </h2>
+        
+        <div id="player">
+            <div ng-repeat="track in tracks">
+                <img src="{{ track.imageUrl }}" width="150" />
+                <div>{{ track.artist }} / {{ track.name }}</div>
+            </div>
+        </div>
 
         <h3>Add music to the Jukebox</h3>
 

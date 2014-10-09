@@ -1,5 +1,4 @@
-﻿//function jukeboxController($scope, $http, $location, socket) {
-app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout', 'socket', 
+﻿app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout', 'socket', 
     function ($scope, $http, $location, $timeout, socket) {
     console.log($scope);
 
@@ -8,6 +7,7 @@ app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout',
     $scope.chooseMusic = false;
     $scope.choosePlaylists = false;
     $scope.finished = false;
+    $scope.tracks = [];
 
     $scope.jukebox = {};
     $scope.spotify = { userId: null, playlists: [] };
@@ -28,55 +28,49 @@ app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout',
     });
 
 
-// socket.io
+    // socket.io
+    socket.on('play', function(track) {
+        console.log('play ' + track.url + ' cue = ' + getCue(track) + ' start time = ' + track.startTime + '. Duration = ' + track.duration);
+        play(track);
+    });
 
-        socket.on('play', function(track) {
-            console.log('play ' + track.url + ' cue = ' + getCue(track) + ' start time = ' + track.startTime + '. Duration = ' + track.duration);
-            play(track);
-        });
+    var getCue = function(track) {
+        return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
+    };
 
-        var getCue = function(track) {
-            return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
-        };
+    // plays an audio track from url starting at cue
+    // For an advanced player implementation see 
+    // https://github.com/possan/webapi-player-example/blob/master/services/playback.js
+    // http://www.w3schools.com/tags/ref_av_dom.asp
 
-        //var audios = [];
-
-// plays an audio track from url starting at cue
-// For an advanced player implementation see 
-// https://github.com/possan/webapi-player-example/blob/master/services/playback.js
-// http://www.w3schools.com/tags/ref_av_dom.asp
     var play = function (track) {
         console.log("play", track);
 
         var audio = new Audio(track.url);
-        //TODO: Attach to DOM and show controls ?
+        audio.id = track.id;
         audio.controls = "controls";
-
+        //TODO: Attach to DOM and show controls ?
+        $scope.tracks.push(track);
+        //$('#player').append(audio);
+        
         audio.addEventListener('loadedmetadata', function() {
             console.log('audio loadedmetadata');
-            //audio.play();
         }, false);
 
         audio.addEventListener('canplay', function() {
-            console.log('audio canplay', audio.currentTime);
-            //var cue = getCue(track);
-            
-//            if (cue > 0 && audio.currentTime == 0) {
-//                audio.currentTime = cue / 1000;
-//                console.log('audio canplay', cue / 1000, audio.currentTime);
-//                //audio.play();
-//            }
-            
+            console.log('audio canplay', audio.currentTime);            
         }, false);
 
-        audio.addEventListener('ended', function() {
+        audio.addEventListener('ended', function () {
+
             console.log('audio ended', audio);
             if (audio != null) {
                 audio.pause();
+                $scope.tracks.shift();
+                //$('#' + track.id).detach();
                 delete (audio);
                 audio = null;
             }
-            //socket.emit('next', $scope.jukebox.id);
         }, false);
         
         // set timer to push play at track.startTime;
@@ -88,8 +82,7 @@ app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout',
         $timeout(function() { audio.play(); }, timeout);
     };
 
-
-// /socket.io
+    // /socket.io
 
         $scope.start = function() {
             console.log("playButton.click");
@@ -115,7 +108,6 @@ app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout',
             playlist.Loading = true;
 
             // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
-
             $http.post('/api/jukeboxes/'+ $scope.jukebox.id + '/tracks', { username: playlist.owner.id, playlistId: playlist.id })
                 .success(function() {
                     playlist.Loading = false;
@@ -126,6 +118,3 @@ app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout',
         };
     }
 ]);
-
-
-//}
