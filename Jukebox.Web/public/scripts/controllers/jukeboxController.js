@@ -81,7 +81,9 @@ app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout',
         
         // set timer to push play at track.startTime;
         var now = new Date();
-        var timeout = Math.max(now.getTime(), new Date(track.startTime).getTime()) - now.getTime();
+        var startTime = new Date(track.startTime);
+        console.log("startTime", startTime);
+        var timeout = Math.max(now.getTime(), startTime.getTime()) - now.getTime();
         console.log("playing in ", timeout);
         $timeout(function() { audio.play(); }, timeout);
     };

@@ -79,8 +79,14 @@ var select = function(track, tracks) {
     var index = (Math.floor(Math.random() * (tracks.length - 1)) + 1) - 1;
     console.log("selected from tracks", index, tracks.length);
 
+    var now = new Date();
     //TODO: //var startTime = new Date(track ? track.startTime + tracks[index].duration : new Date().getTime() + 10000);
-    var startTime = new Date(track ? track.startTime.getTime() + 30000 : new Date().getTime() + 10000);
+    var startTime = new Date(track ? track.startTime.getTime() + 30000 : now.getTime() + 10000);
+    if (startTime.getTime() < now.getTime()) {
+        var newStartTime = new Date(now.getTime() + 10000);
+        console.log("{startTime} for next track is too old. Resetting to {now + 10\"}", startTime, newStartTime);
+        startTime = newStartTime;
+    }
 
     return {
         url: tracks[index].PreviewUrl,
