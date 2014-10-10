@@ -7,7 +7,7 @@
     $scope.chooseMusic = false;
     $scope.choosePlaylists = false;
     $scope.finished = false;
-    $scope.tracks = [];
+    $scope.track = null;
 
     $scope.jukebox = {};
     $scope.spotify = { userId: null, playlists: [] };
@@ -50,7 +50,7 @@
         audio.id = track.id;
         audio.controls = "controls";
         //TODO: Attach to DOM and show controls ?
-        $scope.tracks.push(track);
+        //$scope.tracks.push(track);
         //$('#player').append(audio);
         
         audio.addEventListener('loadedmetadata', function() {
@@ -62,11 +62,10 @@
         }, false);
 
         audio.addEventListener('ended', function () {
-
             console.log('audio ended', audio);
             if (audio != null) {
                 audio.pause();
-                $scope.tracks.shift();
+                //$scope.tracks.shift();
                 //$('#' + track.id).detach();
                 delete (audio);
                 audio = null;
@@ -79,7 +78,10 @@
         console.log("startTime", startTime);
         var timeout = Math.max(now.getTime(), startTime.getTime()) - now.getTime();
         console.log("playing in ", timeout);
-        $timeout(function() { audio.play(); }, timeout);
+        $timeout(function() {
+            $scope.track = track;
+            audio.play();
+        }, timeout);
     };
 
     // /socket.io

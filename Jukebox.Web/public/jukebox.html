@@ -7,6 +7,13 @@
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <link href="/css/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/csspinner.css" />
+    
+    <style type="text/css">
+        .player div {
+            font-size: 2.2em;
+            padding-left: 10px;
+        }
+    </style>
 
     <script src="/scripts/modernizr-2.6.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
@@ -37,10 +44,12 @@
             {{ jukebox.name }} <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()">Play</button>
         </h2>
         
-        <div id="player">
-            <div ng-repeat="track in tracks">
-                <img src="{{ track.imageUrl }}" width="150" />
-                <div>{{ track.artist }} / {{ track.name }}</div>
+        <div class="panel panel-default" ng-show="track">
+            <div class="panel-body" style="font-size: 2em;">
+                <a href="{{ track.webUrl }}"><img src="{{ track.imageUrl }}" width="150" class="pull-left" style="margin-right:10px;" /></a>
+                <div><span class="glyphicon glyphicon-play"></span> {{ track.remain }} 00:00</div>
+                <div>{{ track.artist }}</div>
+                <div><a href="{{ track.webUrl }}">{{ track.name }}</a></div>
             </div>
         </div>
 

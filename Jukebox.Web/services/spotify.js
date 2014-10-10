@@ -28,7 +28,7 @@ var getAuthToken = function (callback) {
         return;
     }
 
-    if (authToken.expires == null || authToken.expires < now) {
+    if (authToken.expires == null || authToken.expires.getTime() < now.getTime()) {
         var authEncoded = new Buffer(process.env.SpotifyApiClientId + ':' + process.env.SpotifyApiClientSecret).toString('base64');
 
         // get a new token
@@ -39,11 +39,13 @@ var getAuthToken = function (callback) {
                 callback(error);
                 return;
             }
+
             console.log('got auth token');
-                var expires = new Date(now.getTime() + response.expires_in * 60000);
-                authToken = { token: response.access_token, expires: expires };
-                callback(null, authToken.token);
-                return;
+            var expires = new Date(now.getTime() + response.expires_in * 1000);
+            authToken = { token: response.access_token, expires: expires };
+            callback(null, authToken.token);
+            return;
+
         });
         return;
     }
