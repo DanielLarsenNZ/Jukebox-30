@@ -10,6 +10,7 @@
     $scope.track = null;
     $scope.startsIn = 0;
     $scope.playing = false;
+    $scope.audios = [];
 
     $scope.jukebox = {};
     $scope.spotify = { userId: null, playlists: [] };
@@ -32,13 +33,12 @@
 
     // socket.io
     socket.on('play', function(track) {
-        console.log('play ' + track.url + ' cue = ' + getCue(track) + ' start time = ' + track.startTime + '. Duration = ' + track.duration);
         play(track);
     });
 
-    var getCue = function(track) {
-        return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
-    };
+//    var getCue = function(track) {
+//        return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
+//    };
 
     // plays an audio track from url starting at cue
     // For an advanced player implementation see 
@@ -48,13 +48,13 @@
     var startsInTimeout;
 
     var play = function (track) {
+        if (!$scope.playing) return;
         console.log("play", track);
 
         var audio = new Audio(track.url);
         audio.id = track.id;
         audio.controls = "controls";
-        //TODO: Attach to DOM and show controls ?
-        //$scope.tracks.push(track);
+        $scope.audios[audio.id] = audio;
         //$('#player').append(audio);
         
         audio.addEventListener('loadedmetadata', function() {
@@ -67,13 +67,7 @@
 
         audio.addEventListener('ended', function () {
             console.log('audio ended', audio);
-            if (audio != null) {
-                audio.pause();
-                //$scope.tracks.shift();
-                //$('#' + track.id).detach();
-                delete (audio);
-                audio = null;
-            }
+            stop(audio);
         }, false);
         
         // set timer to push play at track.startTime;
@@ -112,10 +106,32 @@
 
     // /socket.io
 
+    var stop = function (audio) {
+        console.log("stopping", audio);
+        if (audio != null) {
+            audio.pause();
+            //audio.stop();
+            //$scope.tracks.shift();
+            //$('#' + track.id).detach();
+            delete $scope.audios[audio.id];
+            delete (audio);
+            audio = null;
+        }
+    };
+
     $scope.start = function() {
         console.log("playButton.click");
         socket.emit('join', $scope.jukebox.id);
         $scope.playing = true;
+    };
+
+    $scope.stop = function() {
+        //socket.emit('stop', $scope.jukebox.id);
+        for (var audio in $scope.audios) {
+            stop($scope.audios[audio]);
+        }
+        $scope.track = null;
+        $scope.playing = false;
     };
 
     $scope.getPlaylists = function() {

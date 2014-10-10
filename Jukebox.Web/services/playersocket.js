@@ -96,7 +96,8 @@ var select = function(track, tracks) {
         album: tracks[index].Album,
         imageUrl: tracks[index].ImageUrl,
         duration: 30000, //TODO: tracks[index].Duration
-        startTime: startTime
+        startTime: startTime,
+        webUrl: tracks[index].WebUrl
     };  
 };
 

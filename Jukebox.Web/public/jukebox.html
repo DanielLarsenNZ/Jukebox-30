@@ -40,7 +40,9 @@
         </div>
 
         <h2>
-            {{ jukebox.name }} <span ng-show="loading">Loading...</span> <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()">Play</button>
+            {{ jukebox.name }} <span ng-show="loading">Loading...</span>
+            <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()" ng-show="!playing">Play</button>
+            <button class="btn btn-danger" ng-show="playing" ng-click="stop()">Stop</button>
         </h2>
 
         <div class="panel panel-default player" ng-show="!track && playing">
