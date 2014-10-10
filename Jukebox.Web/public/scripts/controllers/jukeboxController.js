@@ -78,9 +78,21 @@
         console.log("startTime", startTime);
         var timeout = Math.max(now.getTime(), startTime.getTime()) - now.getTime();
         console.log("playing in ", timeout);
-        $timeout(function() {
+        var remainTimeout;
+        
+        $timeout(function () {
+            if (remainTimeout) $timeout.cancel(remainTimeout);
+            track.remain = 30;
             $scope.track = track;
             audio.play();
+            
+            // start the remaining countdown
+            remainTimeout = $timeout(function countdown () {
+                track.remain--;
+                if (track.remain > 0) {
+                    remainTimeout = $timeout(countdown, 1000);
+                }
+            }, 1000);
         }, timeout);
     };
 

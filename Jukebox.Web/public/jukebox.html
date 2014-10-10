@@ -46,10 +46,10 @@
         
         <div class="panel panel-default" ng-show="track">
             <div class="panel-body" style="font-size: 2em;">
-                <a href="{{ track.webUrl }}"><img src="{{ track.imageUrl }}" width="150" class="pull-left" style="margin-right:10px;" /></a>
-                <div><span class="glyphicon glyphicon-play"></span> {{ track.remain }} 00:00</div>
+                <a href="{{ track.webUrl }}" target="_blank"><img src="{{ track.imageUrl }}" width="150" class="pull-left" style="margin-right:10px;" /></a>
+                <div><span class="glyphicon glyphicon-play"></span> 00:{{ track.remain }} </div>
                 <div>{{ track.artist }}</div>
-                <div><a href="{{ track.webUrl }}">{{ track.name }}</a></div>
+                <div><a href="{{ track.webUrl }}" target="_blank">{{ track.name }}</a></div>
             </div>
         </div>
 
