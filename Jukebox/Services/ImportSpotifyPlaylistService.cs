@@ -48,8 +48,9 @@ namespace Jukebox.Services
             {
                 //TODO: Add duration & JSON
                 entities.Add(new JukeboxTrackEntity((string)importMessage.jukeboxId, (string)item.track.name,
-                    (string)item.track.artists[0].name, (string)item.track.album.name, (string)item.track.preview_url,
-                    (string)item.track.album.images[0].url));
+                    (string)item.track.artists[0].name, (string)item.track.album.name, (int)item.track.duration_ms, 
+                    (string)item.track.preview_url,
+                    (string)item.track.album.images[1].url, (string)item.track.external_urls.spotify));
             }
 
             //  add to tracks table

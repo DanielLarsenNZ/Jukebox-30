@@ -8,6 +8,8 @@
     $scope.choosePlaylists = false;
     $scope.finished = false;
     $scope.track = null;
+    $scope.startsIn = 0;
+    $scope.playing = false;
 
     $scope.jukebox = {};
     $scope.spotify = { userId: null, playlists: [] };
@@ -42,6 +44,8 @@
     // For an advanced player implementation see 
     // https://github.com/possan/webapi-player-example/blob/master/services/playback.js
     // http://www.w3schools.com/tags/ref_av_dom.asp
+    
+    var startsInTimeout;
 
     var play = function (track) {
         console.log("play", track);
@@ -94,41 +98,51 @@
                 }
             }, 1000);
         }, timeout);
+
+        // startsIn countdown timer
+        $scope.startsIn = parseInt(timeout/1000);
+        startsInTimeout = $timeout(function startsInCountdown() {
+            $scope.startsIn--;
+            if ($scope.startsIn > 0) {
+                startsInTimeout = $timeout(startsInCountdown, 1000);
+            }
+        }, 1000);
+
     };
 
     // /socket.io
 
-        $scope.start = function() {
-            console.log("playButton.click");
-            socket.emit('join', $scope.jukebox.id);
-        };
+    $scope.start = function() {
+        console.log("playButton.click");
+        socket.emit('join', $scope.jukebox.id);
+        $scope.playing = true;
+    };
 
-        $scope.getPlaylists = function() {
-            $scope.error = null;
-            $scope.playlistsLoading = true;
+    $scope.getPlaylists = function() {
+        $scope.error = null;
+        $scope.playlistsLoading = true;
 
-            $http.get('/api/playlists?username=' + $scope.spotify.userId).success(function(data) {
-                $scope.spotify.playlists = data.items;
-                $scope.playlistsLoading = false;
-                $scope.choosePlaylists = true;
+        $http.get('/api/playlists?username=' + $scope.spotify.userId).success(function(data) {
+            $scope.spotify.playlists = data.items;
+            $scope.playlistsLoading = false;
+            $scope.choosePlaylists = true;
+        }).error(function(data) {
+            $scope.error = data.error.message;
+            $scope.playlistsLoading = false;
+        });
+    };
+
+    $scope.addPlaylist = function(playlist) {
+        playlist.Add = true;
+        playlist.Loading = true;
+
+        // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
+        $http.post('/api/jukeboxes/'+ $scope.jukebox.id + '/tracks', { username: playlist.owner.id, playlistId: playlist.id })
+            .success(function() {
+                playlist.Loading = false;
             }).error(function(data) {
                 $scope.error = data.error.message;
-                $scope.playlistsLoading = false;
+                playlist.Loading = false;
             });
-        };
-
-        $scope.addPlaylist = function(playlist) {
-            playlist.Add = true;
-            playlist.Loading = true;
-
-            // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
-            $http.post('/api/jukeboxes/'+ $scope.jukebox.id + '/tracks', { username: playlist.owner.id, playlistId: playlist.id })
-                .success(function() {
-                    playlist.Loading = false;
-                }).error(function(data) {
-                    $scope.error = data.error.message;
-                    playlist.Loading = false;
-                });
-        };
-    }
-]);
+    };
+}]);

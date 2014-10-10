@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="/css/csspinner.css" />
     
     <style type="text/css">
-        .player div {
-            font-size: 2.2em;
-            padding-left: 10px;
+        .player {
+            background-color: #eee;
         }
     </style>
 
@@ -41,13 +40,28 @@
         </div>
 
         <h2>
-            {{ jukebox.name }} <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()">Play</button>
+            {{ jukebox.name }} <span ng-show="loading">Loading...</span> <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()">Play</button>
         </h2>
-        
-        <div class="panel panel-default" ng-show="track">
+
+        <div class="panel panel-default player" ng-show="!track && playing">
+            <div class="panel-body" style="font-size: 2em;">
+                <div class="spinner pull-left" style="height:150px;width:150px;margin:auto 10px;">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div>
+                <div ng-show="!startsIn"><span class="glyphicon glyphicon-pause"></span> 00:00 </div>
+                <div ng-show="startsIn"><span class="glyphicon glyphicon-pause"></span> 00:{{ startsIn | numberFixedLen:2 }} </div>
+                <div>Stand by...</div>
+            </div>
+        </div>
+
+        <div class="panel panel-default player" ng-show="track">
             <div class="panel-body" style="font-size: 2em;">
                 <a href="{{ track.webUrl }}" target="_blank"><img src="{{ track.imageUrl }}" width="150" class="pull-left" style="margin-right:10px;" /></a>
-                <div><span class="glyphicon glyphicon-play"></span> 00:{{ track.remain }} </div>
+                <div><span class="glyphicon glyphicon-play"></span> 00:{{ track.remain | numberFixedLen:2 }} </div>
                 <div>{{ track.artist }}</div>
                 <div><a href="{{ track.webUrl }}" target="_blank">{{ track.name }}</a></div>
             </div>
