@@ -4,19 +4,23 @@
 
     module.exports.request = request;
 
-    module.exports.get = function (url, options, callback) {
+module.exports.get = function (url, options, callback) {
+    if (!options) options = {};
         options.method = 'GET';
         request(url, null, options, callback);
     };
 
-    module.exports.post = function(url, data, options, callback) {
-        options.method = 'POST';
-        // default content type is form-urlencoded
-        if (options.headers['Content-Type'] == undefined) {
-            options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-        }
-        request(url, data, options, callback);
-    };
+module.exports.post = function (url, data, options, callback) {
+    if (!options) options = {};
+
+    options.method = 'POST';
+    // default content type is form-urlencoded
+    if (options.headers['Content-Type'] == undefined) {
+        options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    }
+    request(url, data, options, callback);
+};
+
 
     var request = function (url, data, options, callback) {
         var parsedUrl = $url.parse(url, true);

@@ -35,7 +35,7 @@
 <body>
     <div class="container body-content" ng-controller="jukeboxController">
         <div class="page-header">
-            <h1>Jukebox 30</h1>
+            <h1><a href="/">Jukebox 30</a></h1>
             <p>Listen to 30 second previews of Spotify tracks with your friends.</p>
         </div>
 
@@ -62,7 +62,7 @@
 
         <div class="panel panel-default player" ng-show="track">
             <div class="panel-body" style="font-size: 2em;">
-                <a href="{{ track.webUrl }}" target="_blank"><img src="{{ track.imageUrl }}" width="150" class="pull-left" style="margin-right:10px;" /></a>
+                <a href="{{ track.webUrl }}" target="_blank"><img ng-src="{{ track.imageUrl }}" width="150" class="pull-left" style="margin-right:10px;" /></a>
                 <div><span class="glyphicon glyphicon-play"></span> 00:{{ track.remain | numberFixedLen:2 }} </div>
                 <div>{{ track.artist }}</div>
                 <div><a href="{{ track.webUrl }}" target="_blank">{{ track.name }}</a></div>
