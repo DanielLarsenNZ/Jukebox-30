@@ -24,7 +24,8 @@ namespace Jukebox.WebJobs
                 int result;
                 if (int.TryParse(maxPollSetting, out result)) 
                 {
-                    config.Queues.MaxPollingInterval = TimeSpan.FromMinutes(result);     
+                    config.Queues.MaxPollingInterval = TimeSpan.FromMinutes(result);
+                    Trace.TraceInformation("JobHostConfiguration.Queues.MaxPollingInterval set to {0} minutes.", result);
                 }
             }
 
