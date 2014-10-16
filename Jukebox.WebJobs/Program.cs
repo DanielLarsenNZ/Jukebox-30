@@ -14,6 +14,20 @@ namespace Jukebox.WebJobs
             var config =
                 new JobHostConfiguration(
                     System.Configuration.ConfigurationManager.AppSettings["AZURE_STORAGE_CONNECTION_STRING"]);
+
+            // set max poll setting if configured. Default is 10 mins
+            // http://azure.microsoft.com/blog/2014/08/21/announcing-the-0-4-0-beta-preview-of-microsoft-azure-webjobs-sdk/
+            var maxPollSetting = System.Configuration.ConfigurationManager.AppSettings["JobHostConfiguration.Queues.MaxPollingInterval"];
+
+            if (!string.IsNullOrEmpty(maxPollSetting))
+            {
+                int result;
+                if (int.TryParse(maxPollSetting, out result)) 
+                {
+                    config.Queues.MaxPollingInterval = TimeSpan.FromMinutes(result);     
+                }
+            }
+
             var host = new JobHost(config);
             host.RunAndBlock();
         }

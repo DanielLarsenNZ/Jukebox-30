@@ -73,12 +73,19 @@ Hacking on Azure
 	- Logging
 		- http://blog.amitapple.com/post/2014/06/azure-website-logging/
 	
+	- MaxPollingInterval (!) - defaults to 10 mins - http://azure.microsoft.com/blog/2014/08/21/announcing-the-0-4-0-beta-preview-of-microsoft-azure-webjobs-sdk/
+	
 	PRICING
 	- Free website
 	- Shared website = $13/mo => 18/mo (+33%) (custom domain name, auto scale)
 	- Basic website w/ Always On = $72/mo
 	- Standard Scheduler = $18/mo (1 min)
 	- Web Role (Cloud Service) = $19/mo
+
+???	GIT & GITHUB
+	- git stash is your friend - http://git-scm.com/docs/git-stash
+	
+	
 	
 210	OUTRO
 	- Recap
