@@ -3,7 +3,7 @@ Hacking-on-Azure
 
 Code Camp Auckland 2014 talk. Demonstrating Azure by quickly building useful software to explore what is possible.
 
-`Check out a working demo online: http://jukebox30.azurewebsites.net/`
+#### Check out a working demo online: http://jukebox30.azurewebsites.net/
 
 I will be demonstrating this project at these upcoming meetups:
 * [Wellington .NET UG, October 29th 2014](http://www.meetup.com/WelliDotNet/events/207322862/)
