@@ -1,70 +1,45 @@
-﻿
+﻿var _jukeboxService = require('../services/jukeboxservice.js');
+
     // POST /api/jukeboxes
     // creates a Jukebox and returns the id
 exports.createJukebox = function(req, res) {
-    var storage = require('../services/tablestorage.js');
-    var uuid = require('node-uuid');
-    
-    var uid = uuid.v4();    
-    var name = req.param('name');
-    var jukebox = {
-        id: uid,
-        name: name,
-        RowKey: uid,
-        PartitionKey: getPartitionKey(),
-        spotifyUsername: req.param('spotifyUsername'),
-        whenCreated: new Date()
-    };
+	_jukeboxService.createJukebox(req.param('name'), req.param('spotifyUsername'), function(error, jukebox){
+		if (error) {
+			console.error(error.stack);
+			res.send(500, error.message);
+			return;
+		}
 
-    storage.insert("jukebox", jukebox,
-        function(error) {
-            if (error) {
-                console.error(error.stack);
-                res.send(500, error.message);
-                return;
-            }
-            res.json(jukebox);
-        });
+		res.json(jukebox);		
+	});	
 };
 
 // GET /api/jukeboxes
 // lists jukeboxes
 exports.listJukeboxes = function(req, res) {
-    var storage = require('../services/tablestorage.js');
-    var azure = require('azure');
+	_jukeboxService.listJukeboxes(20, function(error, jukeboxes){
+		if (error) {
+			console.error(error.stack);
+			res.send(500, error.message);
+			return;
+		}
 
-    storage.get("jukebox", new azure.TableQuery()
-        .top(20)
-        .from("jukebox")
-        .where('PartitionKey ge ?', getPartitionKey()), function (error, jukeboxes) {
-        if (error) {
-            console.log(error);
-            return;
-        }
-        
-        console.log("got jukeboxes", jukeboxes.length);
-        res.json(jukeboxes);        
-        return;
-    });
+		res.json(jukeboxes);
+	});
 };
 
 // GET /api/jukeboxes/:id
 // retrieves a jukeboxe
 exports.getJukebox = function(req, res) {
-    var storage = require('../services/tablestorage.js');
-    var azure = require('azure');
-    storage.get("jukebox", new azure.TableQuery()
-        .from("jukebox")
-        .where('RowKey eq ?', req.param("id")), function (error, jukebox) {
-        if (error) {
-            console.log(error);
-            return;
-        }
-        
-        console.log("got jukebox");
-        res.json(jukebox);
-        return;
-    });
+	_jukeboxService.getJukebox(req.param("id"), function(error, jukebox){
+		if (error) {
+			console.error(error.stack);
+			res.send(500, error.message);
+			return;
+		}
+
+		res.json(jukebox);
+	});
 };
 
 // GET /api/playlists?username=daniellarsennz
@@ -107,9 +82,4 @@ exports.importPlaylist = function (req, res) {
 
         res.send(200, "ok");
     });
-};
-
-var getPartitionKey = function () {
-    // current simple implementation returns integer representation of today's date, i.e. number of days since 1970.
-    return parseInt((Date.now() - (24*60*60*1000*7)) / 1000 / 60 / 60 / 24).toString();
 };
