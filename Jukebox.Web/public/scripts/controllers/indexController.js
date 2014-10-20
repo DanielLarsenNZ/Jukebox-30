@@ -2,7 +2,10 @@
     function($scope, $http, $location) {
         $scope.loading = true;
 
-        $http.get('/api/jukeboxes').success(function(data) {
+        $http({
+        url: '/api/jukeboxes',
+        params: { 'requestid': new Date().getTime() }
+        }).success(function(data) {
             $scope.jukeboxes = data;
             $scope.loading = false;
         }).error(function(data) {
