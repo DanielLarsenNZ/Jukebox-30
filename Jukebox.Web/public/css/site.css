@@ -97,3 +97,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 /* /Spinner */
+
+.player {
+    background-color: #eee;
+}
