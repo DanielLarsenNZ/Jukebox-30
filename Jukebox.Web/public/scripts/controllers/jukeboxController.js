@@ -1,5 +1,5 @@
-﻿app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout', 'socket', 
-    function ($scope, $http, $location, $timeout, socket) {
+﻿app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout', '$routeParams', 'socket',  
+    function ($scope, $http, $location, $timeout, $routeParams, socket) {
     console.log($scope);
 
     $scope.loading = true;
@@ -15,7 +15,7 @@
     $scope.jukebox = {};
     $scope.spotify = { userId: null, playlists: [] };
 
-    $http.get('/api/jukeboxes/' + $location.search().id).success(function(data) {
+    $http.get('/api/jukeboxes/' + $routeParams.jukeboxId).success(function(data) {
         $scope.jukebox = data[0];
         $scope.spotify = { userId: $scope.jukebox.spotifyUsername, playlists: [] };
         

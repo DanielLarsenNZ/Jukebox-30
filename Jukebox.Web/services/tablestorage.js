@@ -19,6 +19,19 @@ module.exports.insert = function (table, entity, callback) {
     });
 };
 
+module.exports.update = function(table, entity, callback){
+	var tableService = getTableService();
+	
+	tableService.updateEntity(table, entity, function (error) {
+		if (error) {
+			callback(error);
+			return;
+		}
+		
+		callback(null);
+	});	
+};
+
     // Deletes entity. Invokes callback(error) when done.
 module.exports.delete = function (table, entity, callback) {
     var tableService = getTableService();

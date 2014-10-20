@@ -111,4 +111,4 @@ CREDITS
 MORE
 	Application Insights SDK API: http://msdn.microsoft.com/en-us/library/dn495445.aspx
 	Application Insights for Node: https://www.npmjs.org/package/applicationinsights https://github.com/Microsoft/AppInsights-node.js
-	
+	Angular multi-view routing: https://docs.angularjs.org/tutorial/step_07

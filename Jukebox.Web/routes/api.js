@@ -1,115 +1,90 @@
-﻿
+﻿(function() {
+    "use strict";
+
+    var _jukeboxService = require('../services/jukeboxservice.js');
+
     // POST /api/jukeboxes
     // creates a Jukebox and returns the id
-exports.createJukebox = function(req, res) {
-    var storage = require('../services/tablestorage.js');
-    var uuid = require('node-uuid');
-    
-    var uid = uuid.v4();    
-    var name = req.param('name');
-    var jukebox = {
-        id: uid,
-        name: name,
-        RowKey: uid,
-        PartitionKey: getPartitionKey(),
-        spotifyUsername: req.param('spotifyUsername'),
-        whenCreated: new Date()
+    exports.createJukebox = function(req, res) {
+	    _jukeboxService.createJukebox(req.param('name'), req.param('spotifyUsername'), function(error, jukebox){
+		    if (error) {
+			    console.error(error.stack);
+			    res.send(500, error.message);
+			    return;
+		    }
+
+		    res.json(jukebox);		
+	    });	
     };
 
-    storage.insert("jukebox", jukebox,
-        function(error) {
+    // GET /api/jukeboxes
+    // lists jukeboxes
+    exports.listJukeboxes = function(req, res) {
+	    _jukeboxService.listJukeboxes(50, function(error, jukeboxes){
+		    if (error) {
+			    console.error(error.stack);
+			    res.send(500, error.message);
+			    return;
+		    }
+
+		    res.json(jukeboxes);
+	    });
+    };
+
+    // GET /api/jukeboxes/:id
+    // retrieves a jukeboxe
+    exports.getJukebox = function(req, res) {
+	    _jukeboxService.getJukebox(req.param("id"), function(error, jukebox){
+		    if (error) {
+			    console.error(error.stack);
+			    res.send(500, error.message);
+			    return;
+		    }
+
+		    res.json(jukebox);
+	    });
+    };
+
+    // GET /api/playlists?username=daniellarsennz
+        // Gets Spotify Playlists for a given username
+    exports.getPlaylists = function (req, res) {
+        var spotify = require('../services/spotify.js');
+    
+        spotify.getPlaylists(req.query.username, function (error, response) {
             if (error) {
                 console.error(error.stack);
                 res.send(500, error.message);
                 return;
             }
-            res.json(jukebox);
+        
+            res.json(response);
         });
-};
-
-// GET /api/jukeboxes
-// lists jukeboxes
-exports.listJukeboxes = function(req, res) {
-    var storage = require('../services/tablestorage.js');
-    var azure = require('azure');
-
-    storage.get("jukebox", new azure.TableQuery()
-        .top(20)
-        .from("jukebox")
-        .where('PartitionKey ge ?', getPartitionKey()), function (error, jukeboxes) {
-        if (error) {
-            console.log(error);
-            return;
-        }
-        
-        console.log("got jukeboxes", jukeboxes.length);
-        res.json(jukeboxes);        
-        return;
-    });
-};
-
-// GET /api/jukeboxes/:id
-// retrieves a jukeboxe
-exports.getJukebox = function(req, res) {
-    var storage = require('../services/tablestorage.js');
-    var azure = require('azure');
-    storage.get("jukebox", new azure.TableQuery()
-        .from("jukebox")
-        .where('RowKey eq ?', req.param("id")), function (error, jukebox) {
-        if (error) {
-            console.log(error);
-            return;
-        }
-        
-        console.log("got jukebox");
-        res.json(jukebox);
-        return;
-    });
-};
-
-// GET /api/playlists?username=daniellarsennz
-    // Gets Spotify Playlists for a given username
-exports.getPlaylists = function (req, res) {
-    var spotify = require('../services/spotify.js');
-    
-    spotify.getPlaylists(req.query.username, function (error, response) {
-        if (error) {
-            console.error(error.stack);
-            res.send(500, error.message);
-            return;
-        }
-        
-        res.json(response);
-    });
-};
-
-    // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
-    // Adds the tracks from playlist xxxx to the Jukebox.
-exports.importPlaylist = function (req, res) {
-    // queue for import and return
-    var queue = require('../services/queuestorage.js');
-    
-    var message = {
-        jukeboxId: req.params.id,
-        username: req.param('username'),
-        playlistId: req.param('playlistId'),
-        whenCreated: new Date()
     };
 
-    queue.createMessage('import-playlist', JSON.stringify(message), function(error) {
-        if (error) {
-            console.error(error.stack);
-            res.send(500, error.message);
-            return;
-        }
+        // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
+        // Adds the tracks from playlist xxxx to the Jukebox.
+    exports.importPlaylist = function (req, res) {
+        // queue for import and return
+        var queue = require('../services/queuestorage.js');
+    
+        var message = {
+            jukeboxId: req.params.id,
+            username: req.param('username'),
+            playlistId: req.param('playlistId'),
+            whenCreated: new Date()
+        };
 
-        console.log("process ID", process.pid);
+        queue.createMessage('import-playlist', JSON.stringify(message), function(error) {
+            if (error) {
+                console.error(error.stack);
+                res.send(500, error.message);
+                return;
+            }
 
-        res.send(200, "ok");
-    });
-};
+            console.log("process ID", process.pid);
 
-var getPartitionKey = function () {
-    // current simple implementation returns integer representation of today's date, i.e. number of days since 1970.
-    return parseInt((Date.now() - (24*60*60*1000*7)) / 1000 / 60 / 60 / 24).toString();
-};
+            res.send(200, "ok");
+        });
+    };
+})();
+

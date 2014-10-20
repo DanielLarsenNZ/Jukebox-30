@@ -1,0 +1,41 @@
+﻿<div class="container">
+    <h3>Start your own Jukebox</h3>
+    <form role="form" class="form-inline">
+        <div class="form-group">
+            <label for="name" class="sr-only">Jukebox name</label>
+            <input type="text" class="form-control" id="name" ng-model="name" placeholder="Jukebox name" required>
+        </div>
+        <div class="form-group">
+            <label for="name" class="sr-only">Spotify username</label>
+            <input type="text" class="form-control" id="spotifyUsername" ng-model="spotifyUsername" placeholder="Spotify username">
+        </div>
+        <button ng-click="createJukebox()" class="btn btn-success" ng-disabled="!name">Go</button>
+    </form>
+
+    <div ng-show="jukeboxes.length > 0">
+        <h3>Or listen to someone else's....</h3>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Jukebox</th>
+                    <th>Started</th>
+                    <th>Tracks</th>
+                    <th>Listeners</th>
+                    <th>Now playing</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="jukebox in jukeboxes">
+                    <td>
+                        <a href="/#/jukebox/{{ jukebox.id }}">{{ jukebox.name }}</a>
+                    </td>
+                    <td>{{ jukebox.whenCreated | timeDistance }} ago</td>
+                    <td>{{ jukebox.trackCount }}</td>
+                    <td>{{ jukebox.listenerCount }}</td>
+                    <td>{{ jukebox.nowPlaying }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

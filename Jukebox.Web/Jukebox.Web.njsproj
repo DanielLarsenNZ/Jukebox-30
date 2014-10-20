@@ -47,6 +47,7 @@
     <Compile Include="routes\index.js" />
     <Compile Include="routes\user.js" />
     <Compile Include="services\httpjson.js" />
+    <Compile Include="services\jukeboxservice.js" />
     <Compile Include="services\playersocket.js" />
     <Compile Include="services\spotify.js" />
     <Compile Include="services\queuestorage.js" />
@@ -56,13 +57,15 @@
     <Content Include="public\css\bootstrap.min.css" />
     <Content Include="public\css\csspinner.css" />
     <Content Include="public\css\site.css" />
-    <Content Include="public\jukebox.html" />
+    <Content Include="public\views\jukeboxes.html" />
+    <Content Include="public\views\jukebox.html" />
     <Content Include="public\index.html" />
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="public\views\" />
     <Folder Include="public\scripts\controllers\" />
     <Folder Include="public\scripts\services\" />
     <Folder Include="services\" />
