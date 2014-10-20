@@ -20,7 +20,7 @@
     // GET /api/jukeboxes
     // lists jukeboxes
     exports.listJukeboxes = function(req, res) {
-	    _jukeboxService.listJukeboxes(20, function(error, jukeboxes){
+	    _jukeboxService.listJukeboxes(50, function(error, jukeboxes){
 		    if (error) {
 			    console.error(error.stack);
 			    res.send(500, error.message);
