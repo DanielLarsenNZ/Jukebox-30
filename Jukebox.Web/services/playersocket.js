@@ -59,9 +59,9 @@
         if (!track || getCue(track) > 15000) {
             // get tracks from storage. This is the same cost as a message queue check, up to 1000 entities.
             var storage = require('./tablestorage.js');
-            var azure = require('azure');
+            var azure = require('azure-storage');   //TODO: tablestorage should provide this.
             storage.get("jukeboxtrack", new azure.TableQuery()
-            .from("jukeboxtrack")
+            //.from("jukeboxtrack")
             .where('PartitionKey eq ?', jukeboxId), function (error, tracks) {
                 if (error) {
                     console.log(error);

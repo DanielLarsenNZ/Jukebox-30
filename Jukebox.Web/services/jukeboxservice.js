@@ -4,8 +4,9 @@
     var JUKEBOX_TABLE = "jukebox";
 
     var _storage = require('../services/tablestorage.js');
-    var _azure = require('azure');
-
+    var _azure = require('azure-storage');
+    
+    // Create jukebox
     module.exports.createJukebox = function(name, spotifyUsername, callback) {
         var uuid = require('node-uuid');
         var uid = uuid.v4();
@@ -30,11 +31,12 @@
             callback(null, jukebox);
         });
     };
-
+    
+    // List Jukeboxes
     module.exports.listJukeboxes = function(top, callback) {
         _storage.get(JUKEBOX_TABLE, new _azure.TableQuery()
             .top(top)
-            .from(JUKEBOX_TABLE)
+            //.from(JUKEBOX_TABLE)
             .where('trackCount gt ?', 0), 	
             function(error, jukeboxes) {
                 if (error) {
@@ -46,10 +48,11 @@
                 callback(null, jukeboxes);
             });
     };
-
+    
+    // Get Jukebox
     module.exports.getJukebox = function(jukeboxId, callback) {
         _storage.get(JUKEBOX_TABLE, new _azure.TableQuery()
-            .from(JUKEBOX_TABLE)
+            //.from(JUKEBOX_TABLE)
             .where('RowKey eq ?', jukeboxId),
             function(error, jukebox) {
                 if (error) {
@@ -61,7 +64,8 @@
                 callback(null, jukebox);
             });
     };
-
+    
+    // Update Jukebox
     module.exports.updateJukebox = function(jukeboxId, trackCount, listenerCount, nowPlaying, callback) {
         module.exports.getJukebox(jukeboxId, function(error, jukeboxes) {
             if (error) {
@@ -70,11 +74,13 @@
             }
 
             if (jukeboxes.length != 1) throw Error('Unexpected result from getJukebox (jukeboxId, jukeboxes)', jukeboxId, jukeboxes);
-            var jukebox = jukeboxes[0];
+            var jukebox = jukeboxes[0]._entry;
+            
+            var entGen = _azure.TableUtilities.entityGenerator; // stinky poo!
 
-            if (trackCount !== undefined) jukebox.trackCount = trackCount;
-            jukebox.listenerCount = listenerCount;
-            jukebox.nowPlaying = nowPlaying;
+            if (trackCount !== undefined) jukebox.trackCount = entGen.Int32(trackCount);
+            jukebox.listenerCount = entGen.Int32(listenerCount);
+            jukebox.nowPlaying = entGen.String(nowPlaying);
 
             _storage.update(JUKEBOX_TABLE, jukebox, function(error) {
                 if (error) {
@@ -86,7 +92,8 @@
             });
         });
     };
-
+    
+    // Update Jukebox is stopped.
     module.exports.updateJukeboxStopped = function (jukeboxId, callback) {
         module.exports.updateJukebox(jukeboxId, undefined, null, null, function(error, jukebox) {
             if (error) {

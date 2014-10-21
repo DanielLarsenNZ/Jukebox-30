@@ -1,4 +1,5 @@
-bin
+Jukebox/bin
+Jukebox.WebJobs/bin
 obj
 *.suo
 *.user

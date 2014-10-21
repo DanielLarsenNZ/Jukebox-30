@@ -12,7 +12,6 @@
     "jade": "*",
     "stylus": "*",
     "node-uuid": "*",
-    "azure": "*",
     "dotenv": "*",
     "newrelic": "*",
     "azure-storage": "*",
