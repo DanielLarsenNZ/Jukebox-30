@@ -73,12 +73,15 @@
                 setTrack(jukeboxId, track);
 
                 io.to(jukeboxId).emit('play', track);
-                console.log("emit to play", jukeboxId, track.name);
+                console.log("emit to {jukeboxId} play {track.name}", jukeboxId, track.name);
                 
                 // update Jukebox entity
                 _jukeboxService.updateJukebox(jukeboxId, tracks.length, listenerCount, track.artist + ' / ' + track.name, function (error) {
                     if (error) throw error;
                 });
+
+                io.to(jukeboxId).emit('jukebox:data', { jukeboxId: jukeboxId, trackCount: tracks.length, listenerCount: listenerCount });
+                console.log("emit to {jukeboxId} play {track.name}", jukeboxId, track.name);
                 
                 return;
             });

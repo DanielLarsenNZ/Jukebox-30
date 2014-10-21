@@ -36,9 +36,12 @@
         play(track);
     });
 
-//    var getCue = function(track) {
-//        return Math.min(new Date().getTime() - new Date(track.startTime).getTime(), track.duration);
-//    };
+    socket.on('jukebox:data', function(data) {
+        $scope.jukebox.trackCount = data.trackCount;
+        $scope.jukebox.listenerCount = data.listenerCount;
+    });
+
+    
 
     // plays an audio track from url starting at cue
     // For an advanced player implementation see 
