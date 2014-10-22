@@ -2,6 +2,7 @@
     "use strict";
 
     var _azure = require('azure-storage');
+    var _common = require('azure-common');
 
     // Inserts entity. Invokes callback(error) when done.
     // table = table name
@@ -89,16 +90,11 @@
     }
 
     var mapToEntry = function (entity) {
-        var entGen = _azure.TableUtilities.entityGenerator;
+        var edmType = _common.edmType;
+        
         var entry = new Object();
         for (var key in entity) {
-            switch (typeof entity[key]) {
-                //TODO: I cannot believe I am writing this.
-                case 'number':
-                    entry[key] = entGen.Int32(entity[key]);                
-                default:
-                    entry[key] = entGen.String(entity[key]);                
-            }
+            entry[key] = { "_": entity[key], "$": edmType.propertyType(entity[key]) };
         }
         return entry;
     }
