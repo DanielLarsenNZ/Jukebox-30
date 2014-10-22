@@ -11,10 +11,9 @@
     "express": "3.4.4",
     "jade": "*",
     "stylus": "*",
-    "node-uuid": "*",
-    "dotenv": "*",
-    "newrelic": "*",
-    "azure-storage": "*",
+    "node-uuid": "1.4.0",
+    "dotenv": "0.4.0",
+    "azure-storage": "0.3.3",
     "socket.io": "^1.1.0",
     "azure-common" : "0.9.9"
   }

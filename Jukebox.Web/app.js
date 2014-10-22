@@ -6,7 +6,6 @@
 // dan's requires
 var dotenv = require('dotenv');
 dotenv.load();
-//require('newrelic');  //TODO
 
 var express = require('express');
 var routes = require('./routes');
