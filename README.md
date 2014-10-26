@@ -1,20 +1,44 @@
 Hacking-on-Azure
 ================
 
-Code Camp Auckland 2014 talk. Demonstrating Azure by quickly building useful software to explore what is possible.
+Demo project, presentation and notes for a talk about quickly building useful software on Azure to explore what is possible. 
 
-#### Check out a working demo online: http://jukebox30.azurewebsites.net/
+### The talk
 
-I will be demonstrating this project at these upcoming meetups:
+The talk is a deep-dive introductory session, suitable for experienced developers who may not yet have explored Azure in depth. 
+
+I will be talking about building this project at these upcoming meetups:
+* ~~Code Camp 2104~~
 * [Wellington .NET UG, October 29th 2014](http://www.meetup.com/WelliDotNet/events/207322862/)
 * Ellerslie .NET UG, November 25th 2014
+
+
+### The demo app
+
+http://jukebox30.azurewebsites.net/
+
+This is a proof of concept web-app for demonstration purposes. <a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure/fork">Contributions</a>,
+comments and <a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure/issues">issues</a>
+welcomed. <a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure/blob/master/LICENSE">License</a> is MIT.
+
+### Technologies used
+
+[Node.js Tools for Visual Studio (NTVS)](http://nodejstools.codeplex.com/), 
+<a href="http://azure.microsoft.com/en-us/services/websites/">Microsoft Azure Websites</a>, 
+<a href="http://azure.microsoft.com/en-us/services/storage/">Azure Table and Queue Storage</a>, 
+<a href="http://azure.microsoft.com/en-us/documentation/articles/websites-dotnet-webjobs-sdk-get-started/">Webjobs SDK</a>, 
+the <a href="https://developer.spotify.com/web-api/">Spotify Web API</a>, <a href="http://nodejs.org/">Node.js</a>,
+<a href="https://angularjs.org/">Angularjs</a>, <a href="http://getbootstrap.com/">Bootstrap</a>,
+and <a href="http://socket.io/">socket.io</a>.
+
 
 ### Getting started
 
 * Register for a Spotify API Key.
 * Install [NTVS](http://nodejstools.codeplex.com/) (optional)
 * Install Azure Storage Emulator (optional if you have an Azure Storage Account)
-* Create a [.env](https://github.com/scottmotte/dotenv) file "Jukebox\.env" and add your secret keys for the Spotify API, and optionally for Table Storage (or use the Storage emulator), e.g.
+* Create a [.env](https://github.com/scottmotte/dotenv) file "Jukebox\.env" and add your secret keys for the Spotify API, and
+optionally for Table Storage (or use the Storage emulator), e.g.
 
 ```
 SpotifyApiClientId=abcdef1234567890
@@ -22,29 +46,14 @@ SpotifyApiClientSecret=abcdef1234567890
 StorageAccountName=devstoreaccount1
 StorageAccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
 StorageAccountTableStoreHost=127.0.0.1:10002
-NewRelicLicenseKey=abcdef1234567890
 ```
 
-* If you want to monitor the performance of your application with New Relic, sign up for the free New Relic add-on on the Azure portal and copy your license key to .env.
-
-Then open PowerShell/Command prompt and run:
+* git clone https://github.com/DanielLarsenNZ/Hacking-on-Azure.git
+* Then open your favourite console and run:
 
 ```
-cd Jukebox
+cd Hacking-on-Azure\Jukebox.Web
 npm install
 ```
 
-## Links
-* [Microsoft Azure Storage SDK for Node.js](https://github.com/Azure/azure-storage-node)
-* http://azure.microsoft.com/en-us/documentation/articles/storage-nodejs-how-to-use-table-storage/ - this is wrong! use from clause.
-* [Best Practices for Designing a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
-* [Writing an AngularJS App with an Express + Node.js Backend](http://briantford.com/blog/angular-express)
-* [Customizing deployments - Kudu](https://github.com/projectkudu/kudu/wiki/Customizing-deployments)
-WebJobs
-* [Microsoft.Azure.WebJobs - Nuget](http://www.nuget.org/packages/Microsoft.Azure.WebJobs)
-* [Microsoft.Azure.WebJobs.Core - Nuget](http://www.nuget.org/packages/Microsoft.Azure.WebJobs.Core)
-* https://github.com/projectkudu/kudu/wiki/Web-jobs
-* [possan/webapi-player-example (thirtify)](https://github.com/possan/webapi-player-example)
-* http://socket.io/get-started/chat/
-* http://www.w3schools.com/tags/ref_av_dom.asp
-
+* To run the app, in the same directory run `node app.js` -or- run in Visual Studio using NTVS.
