@@ -34,9 +34,9 @@ and <a href="http://socket.io/">socket.io</a>.
 
 ### Getting started
 
-* Register for a Spotify API Key.
+* [Register for a Spotify API Key](https://developer.spotify.com/my-applications/#!/).
 * Install [NTVS](http://nodejstools.codeplex.com/) (optional)
-* Install Azure Storage Emulator (optional if you have an Azure Storage Account)
+* [Install Azure Storage Emulator](http://www.microsoft.com/en-nz/download/details.aspx?id=42317) (optional if you have an Azure Storage Account)
 * Create a [.env](https://github.com/scottmotte/dotenv) file "Jukebox\.env" and add your secret keys for the Spotify API, and
 optionally for Table Storage (or use the Storage emulator), e.g.
 
@@ -56,4 +56,9 @@ cd Hacking-on-Azure\Jukebox.Web
 npm install
 ```
 
-* To run the app, in the same directory run `node app.js` -or- run in Visual Studio using NTVS.
+* To run the app, in the same directory run `node app.js` _or_ run in Visual Studio using NTVS.
+
+### Questions, comments, issues
+
+Message me on Twitter @DanielLarsenNZ or create an issue. Contributions to the project for new features or that help me to improve my code are
+welcomed.
