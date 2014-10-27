@@ -15,3 +15,4 @@ Jukebox.Web/App_Data/jobs/continuous/Jukebox-WebJobs/appSettings.config
 *.vshost.*
 Jukebox.Web/App_Data/jobs/continuous/Jukebox-WebJobs/*.pdb
 Jukebox.Web/App_Data/jobs/continuous/Jukebox-WebJobs/*.xml
+~*.pptx
