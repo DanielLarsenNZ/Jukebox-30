@@ -26,9 +26,19 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// offline page middleware
+if (process.env.OfflineMode === "true") {
+    app.use(function (req, res, next) {
+        res.send(503, "Service Unavailable. Offline for maintenance - retry soon.");
+        console.log('OfflineMode = true. %s %s returned 503 \"Service Unavailable. Offline for maintenance - retry soon.\"', req.method, req.url);
+        //next();
+    });
+}
+
+app.use(app.router);
 
 // development only
 if ('development' == app.get('env')) {

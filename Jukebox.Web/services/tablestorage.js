@@ -68,9 +68,8 @@
                     callback(error);
                     return;
                 }
-                
-                console.log("tablestorage got entities ", result.entries.length);
-                
+
+                console.log("tablestorage got entries ", result.entries.length);
                 // map storage entries to simple JS objects
                 var entities = mapToEntities(result.entries);
                 callback(null, entities);
@@ -84,6 +83,7 @@
         for (var i = 0; i < entries.length; i++) {
             entities[i] = mapToEntity(entries[i]);
         }
+        return entities;
     };
     
     // Maps an Azure Table Storage entry to a simple JS object.
