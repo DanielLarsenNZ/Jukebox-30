@@ -8,6 +8,7 @@ Demo project, presentation and notes for a talk about quickly building useful so
 The talk is a deep-dive introductory session, suitable for experienced developers who may not yet have explored Azure in depth. 
 
 I will be talking about building this project at these upcoming meetups:
+
 * ~~Code Camp 2104~~
 * [Wellington .NET UG, October 29th 2014](http://www.meetup.com/WelliDotNet/events/207322862/)
 * Ellerslie .NET UG, November 25th 2014
@@ -15,7 +16,7 @@ I will be talking about building this project at these upcoming meetups:
 
 ### The demo app
 
-http://jukebox30.azurewebsites.net/
+[http://jukebox30.azurewebsites.net/](http://jukebox30.azurewebsites.net/)
 
 This is a proof of concept web-app for demonstration purposes. <a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure/fork">Contributions</a>,
 comments and <a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure/issues">issues</a>
@@ -57,6 +58,10 @@ npm install
 ```
 
 * To run the app, in the same directory run `node app.js` _or_ run in Visual Studio using NTVS.
+
+### Docs
+
+See the wiki at https://github.com/DanielLarsenNZ/Hacking-on-Azure/wiki. 
 
 ### Questions, comments, issues
 

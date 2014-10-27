@@ -36,7 +36,6 @@
     module.exports.listJukeboxes = function(top, callback) {
         _storage.get(JUKEBOX_TABLE, new _azure.TableQuery()
             .top(top)
-            //.from(JUKEBOX_TABLE)
             .where('trackCount gt ?', 0), 	
             function(error, jukeboxes) {
                 if (error) {

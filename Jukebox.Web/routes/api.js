@@ -1,11 +1,11 @@
 ﻿(function() {
     "use strict";
 
-    var _jukeboxService = require('../services/jukeboxservice.js');
+    var _jukeboxService = module.require('../services/jukeboxservice.js');
 
     // POST /api/jukeboxes
     // creates a Jukebox and returns the id
-    exports.createJukebox = function(req, res) {
+    module.exports.createJukebox = function(req, res) {
 	    _jukeboxService.createJukebox(req.param('name'), req.param('spotifyUsername'), function(error, jukebox){
 		    if (error) {
 			    console.error(error.stack);
@@ -19,7 +19,7 @@
 
     // GET /api/jukeboxes
     // lists jukeboxes
-    exports.listJukeboxes = function(req, res) {
+    module.exports.listJukeboxes = function(req, res) {
 	    _jukeboxService.listJukeboxes(50, function(error, jukeboxes){
 		    if (error) {
 			    console.error(error.stack);
@@ -32,8 +32,8 @@
     };
 
     // GET /api/jukeboxes/:id
-    // retrieves a jukeboxe
-    exports.getJukebox = function(req, res) {
+    // retrieves a jukebox
+    module.exports.getJukebox = function(req, res) {
 	    _jukeboxService.getJukebox(req.param("id"), function(error, jukebox){
 		    if (error) {
 			    console.error(error.stack);
@@ -47,7 +47,7 @@
 
     // GET /api/playlists?username=daniellarsennz
         // Gets Spotify Playlists for a given username
-    exports.getPlaylists = function (req, res) {
+    module.exports.getPlaylists = function (req, res) {
         var spotify = require('../services/spotify.js');
     
         spotify.getPlaylists(req.query.username, function (error, response) {
@@ -63,7 +63,7 @@
 
         // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
         // Adds the tracks from playlist xxxx to the Jukebox.
-    exports.importPlaylist = function (req, res) {
+    module.exports.importPlaylist = function (req, res) {
         // queue for import and return
         var queue = require('../services/queuestorage.js');
     
