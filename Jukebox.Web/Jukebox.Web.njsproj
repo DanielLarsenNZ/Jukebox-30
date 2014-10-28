@@ -59,7 +59,8 @@
     <Content Include="public\css\site.css" />
     <Content Include="public\views\jukeboxes.html" />
     <Content Include="public\views\jukebox.html" />
-    <Content Include="public\index.html" />
+    <Content Include="public\offline.html" />
+    <Content Include="public\_index.html" />
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
   </ItemGroup>

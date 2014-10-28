@@ -3,7 +3,6 @@ Jukebox.WebJobs/bin
 obj
 *.suo
 *.user
-_*
 packages
 *.nupkg
 node_modules
