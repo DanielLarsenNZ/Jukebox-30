@@ -35,8 +35,6 @@ namespace Jukebox.Services
             dynamic importMessage = JsonConvert.DeserializeObject(message);
             var messageQueueTime = DateTime.UtcNow.Subtract((DateTime) importMessage.whenCreated);
             Trace.TraceInformation("Message was queued for " + messageQueueTime);
-            NewRelic.Api.Agent.NewRelic.RecordMetric("Custom/Import-Playlist_Message_Queue_Time",
-                (float) messageQueueTime.TotalMilliseconds);
 
             var entities = new List<TableEntity>();
 

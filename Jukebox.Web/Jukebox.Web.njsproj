@@ -33,7 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
-    <Compile Include="newrelic.js" />
     <Compile Include="public\scripts\app.js" />
     <Compile Include="public\scripts\bootstrap.js" />
     <Compile Include="public\scripts\bootstrap.min.js" />
@@ -44,8 +43,6 @@
     <Compile Include="public\scripts\respond.js" />
     <Compile Include="public\scripts\services\socketservice.js" />
     <Compile Include="routes\api.js" />
-    <Compile Include="routes\index.js" />
-    <Compile Include="routes\user.js" />
     <Compile Include="services\httpjson.js" />
     <Compile Include="services\jukeboxservice.js" />
     <Compile Include="services\playersocket.js" />
@@ -61,8 +58,6 @@
     <Content Include="public\views\jukebox.html" />
     <Content Include="public\offline.html" />
     <Content Include="public\_index.html" />
-    <Content Include="views\index.jade" />
-    <Content Include="views\layout.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
@@ -75,7 +70,6 @@
     <Folder Include="public\scripts\" />
     <Folder Include="public\css\" />
     <Folder Include="routes\" />
-    <Folder Include="views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
