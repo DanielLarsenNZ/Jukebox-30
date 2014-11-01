@@ -50,7 +50,7 @@
     module.exports.getPlaylists = function (req, res) {
         var spotify = require('../services/spotify.js');
     
-        spotify.getPlaylists(req.query.username, function (error, response) {
+        spotify.getPlaylists(req.query.username, req.query.offset, function (error, response) {
             if (error) {
                 console.error(error.stack);
                 res.send(500, error.message);

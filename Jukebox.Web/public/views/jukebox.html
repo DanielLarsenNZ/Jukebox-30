@@ -55,7 +55,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="playlist in spotify.playlists" ng-show="playlist.id">
+        <tr ng-repeat="playlist in playlists" ng-show="playlist.id">
             <td>{{ $index + 1 }}</td>
             <td>{{ playlist.name }} <span class="badge pull-right">{{ playlist.tracks.total }}</span></td>
             <td>{{ playlist.owner.id }}</td>
@@ -73,10 +73,15 @@
     </tbody>
 </table>
 
-<div class="container" ng-show="offlineMode">
-    <div class="jumbotron">
-        <h2>Offline for maintenance</h2>
-        Back soon...
+<button class="btn btn-default" ng-show="spotify.playlists.next" ng-click="getPlaylists()">More...</button>
+
+<div class="container">
+    <div class="spinner pull-left" ng-show="loading || playlistsLoading">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
     </div>
 </div>
 

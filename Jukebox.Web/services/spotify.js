@@ -2,12 +2,12 @@
 var $http = require('../services/httpjson.js');
 
 // returns playlists[]
-module.exports.getPlaylists = function (username, callback) {
+module.exports.getPlaylists = function (username, offset, callback) {
 
     getAuthToken(function(error, token) {
         if (error) {callback(error); return; }
 
-        $http.get(baseUrl + '/users/' + encodeURIComponent(username.toLowerCase()) + '/playlists', {
+        $http.get(baseUrl + '/users/' + encodeURIComponent(username.toLowerCase()) + '/playlists?limit=50&offset=' + offset, {
             headers: { 'Authorization': 'Bearer ' + token }
         }, function(error, response) {
             if (error) { callback(error); return; }

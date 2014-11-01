@@ -11,13 +11,14 @@
     $scope.startsIn = 0;
     $scope.playing = false;
     $scope.audios = [];
+    $scope.playlists = [];
 
     $scope.jukebox = {};
-    $scope.spotify = { userId: null, playlists: [] };
+    $scope.spotify = { userId: null, playlists: null };
 
     $http.get('/api/jukeboxes/' + $routeParams.jukeboxId).success(function(data) {
         $scope.jukebox = data[0];
-        $scope.spotify = { userId: $scope.jukebox.spotifyUsername, playlists: [] };
+        $scope.spotify = { userId: $scope.jukebox.spotifyUsername, playlists: null };
         
         $scope.loading = false;
         
@@ -140,9 +141,15 @@
     $scope.getPlaylists = function() {
         $scope.error = null;
         $scope.playlistsLoading = true;
+        var offset = 0;
 
-        $http.get('/api/playlists?username=' + $scope.spotify.userId).success(function(data) {
-            $scope.spotify.playlists = data.items;
+        if ($scope.spotify.playlists) {
+            offset = $scope.spotify.playlists.offset + $scope.spotify.playlists.limit;
+        }
+
+        $http.get('/api/playlists?username=' + $scope.spotify.userId + '&offset=' + offset).success(function(data) {
+            $scope.spotify.playlists = data;
+            $scope.playlists = $scope.playlists.concat(data.items);
             $scope.playlistsLoading = false;
             $scope.choosePlaylists = true;
         }).error(function(data) {
