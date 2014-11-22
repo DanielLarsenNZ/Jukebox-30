@@ -1,7 +1,7 @@
 ﻿(function() {
     "use strict";
 
-    var _jukeboxService = module.require('../services/jukeboxservice.js');
+    var _jukeboxService = module.require('./services/jukeboxservice.js');
 
     // POST /api/jukeboxes
     // creates a Jukebox and returns the id
@@ -48,7 +48,7 @@
     // GET /api/playlists?username=daniellarsennz
         // Gets Spotify Playlists for a given username
     module.exports.getPlaylists = function (req, res) {
-        var spotify = require('../services/spotify.js');
+        var spotify = require('./services/spotify.js');
     
         spotify.getPlaylists(req.query.username, req.query.offset, function (error, response) {
             if (error) {
@@ -64,24 +64,21 @@
         // POST /api/jukeboxes/:id/tracks {"username":"xxxx", "playlistId":"xxxx"}
         // Adds the tracks from playlist xxxx to the Jukebox.
     module.exports.importPlaylist = function (req, res) {
-        // queue for import and return
-        var queue = require('../services/queuestorage.js');
-    
+        var service = require("./services/playlistservice");
+        
         var message = {
             jukeboxId: req.params.id,
             username: req.param('username'),
             playlistId: req.param('playlistId'),
             whenCreated: new Date()
         };
-
-        queue.createMessage('import-playlist', JSON.stringify(message), function(error) {
+        
+        service.importPlaylist(message, function (error, callback) {
             if (error) {
                 console.error(error.stack);
                 res.send(500, error.message);
                 return;
             }
-
-            console.log("process ID", process.pid);
 
             res.send(200, "ok");
         });

@@ -66,4 +66,35 @@ namespace Jukebox.Services
                         new RuntimeMemoryCache(MemoryCache.Default))));
         }
     }
+
+    public class ImportSpotifyPlaylistServiceInvoker
+    {
+        public async Task<object> Invoke(object input)
+        {
+            try
+            {
+                Trace.TraceInformation("Invoke " + input);
+
+                var appSettings = new NameValueCollection();
+
+                var restHttpClient = new RestHttpClient(new HttpClient());
+
+                var service = new ImportSpotifyPlaylistService(AzureTableStorage.GetTableStorage(appSettings),
+                //var service = new ImportSpotifyPlaylistService(null,
+                    new PlaylistsApi(restHttpClient,
+                        new ClientCredentialsAuthorizationApi(restHttpClient, appSettings,
+                            new RuntimeMemoryCache(MemoryCache.Default))));
+
+                await service.Import((string)input);
+                //return service.ToString();
+                //return appSettings.ToString();
+                return null;
+            }
+            catch(Exception exception)
+            {
+                Trace.TraceError(exception.Message);
+                return exception.Message;
+            }
+        }
+    }
 }

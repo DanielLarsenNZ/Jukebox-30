@@ -8,7 +8,7 @@ var dotenv = require('dotenv');
 dotenv.load();
 
 var express = require('express');
-var api = require('./routes/api');
+var api = require('./api');
 var playerSocket = require('./services/playerSocket');
 var http = require('http');
 var path = require('path');
