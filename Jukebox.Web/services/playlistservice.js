@@ -1,6 +1,7 @@
 ﻿module.exports.importPlaylist = function (message, callback) {
-    invokeImportService(message, callback);
-    // queueForImporting(message, callback);
+    // Set UseQueueForImporting=true to use Queue instead of Edge -> C#
+    if (process.env.UseQueueForImporting === "true") queueForImporting(message, callback);
+    else invokeImportService(message, callback);
 };
 
 var invokeImportService = function (message, callback) {
@@ -13,7 +14,13 @@ var invokeImportService = function (message, callback) {
         methodName: 'Invoke' 
     });
     
-    importPlaylist(message, function (error, result) {
+    // appSettings for .NET DLL are passed in from Node's process env vars. This is a workaround.
+    var input = {
+        settings: process.env,
+        message: message
+    };
+
+    importPlaylist(input, function (error, result) {
         console.log("invoked Jukebox.Services.ImportSpotifyPlaylistServiceInvoker.Invoke()", message, error, result);
         
         // TODO: using result as error for now, as all errors get thrown as StackOverflowException

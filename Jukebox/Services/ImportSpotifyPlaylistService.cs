@@ -78,7 +78,13 @@ namespace Jukebox.Services
         {
             try
             {
-                var appSettings = new NameValueCollection(System.Configuration.ConfigurationManager.AppSettings);
+                // appSettings are passed in from Node's process env vars
+                var appSettings = new NameValueCollection();
+                foreach (var setting in input.settings)
+                {
+                    appSettings.Add(setting.Key, setting.Value);
+                }
+
                 var restHttpClient = new RestHttpClient(new HttpClient());
 
                 var service = new ImportSpotifyPlaylistService(AzureTableStorage.GetTableStorage(appSettings),
@@ -86,7 +92,7 @@ namespace Jukebox.Services
                         new ClientCredentialsAuthorizationApi(restHttpClient, appSettings,
                             new RuntimeMemoryCache(MemoryCache.Default))));
 
-                await service.Import(input);
+                await service.Import(input.message);
                 return null;
 
             }
