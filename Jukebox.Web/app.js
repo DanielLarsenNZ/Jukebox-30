@@ -6,6 +6,7 @@
 // dan's requires
 var dotenv = require('dotenv');
 dotenv.load();
+//require('applicationinsights');
 
 var express = require('express');
 var api = require('./api');

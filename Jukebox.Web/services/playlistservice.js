@@ -8,13 +8,16 @@ var invokeImportService = function (message, callback) {
 
     // crazy horses invoking .NET DLL from Node.js thanks edge.js
     var importPlaylist = edge.func({
-        assemblyFile: __dirname + '/../../Jukebox/bin/Debug/Jukebox.dll',
+        assemblyFile: __dirname + '/../App_Data/jobs/continuous/Jukebox-WebJobs/Jukebox.dll',
         typeName: 'Jukebox.Services.ImportSpotifyPlaylistServiceInvoker',
         methodName: 'Invoke' 
     });
     
-    importPlaylist(message, function (error, result) { 
+    importPlaylist(message, function (error, result) {
         console.log("invoked Jukebox.Services.ImportSpotifyPlaylistServiceInvoker.Invoke()", message, error, result);
+        
+        // TODO: using result as error for now, as all errors get thrown as StackOverflowException
+        if (result) error = result;
         callback(error);
     });
 };
