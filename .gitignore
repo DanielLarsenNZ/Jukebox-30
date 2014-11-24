@@ -15,3 +15,6 @@ Jukebox.Web/App_Data/jobs/continuous/Jukebox-WebJobs/appSettings.config
 Jukebox.Web/App_Data/jobs/continuous/Jukebox-WebJobs/*.pdb
 Jukebox.Web/App_Data/jobs/continuous/Jukebox-WebJobs/*.xml
 ~*.pptx
+*.sln.ide
+Microsoft.NodejsTools.WebRole.dll
+npm-debug.log

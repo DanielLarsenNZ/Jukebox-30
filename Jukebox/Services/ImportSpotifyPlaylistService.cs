@@ -33,6 +33,11 @@ namespace Jukebox.Services
         {
             // dequeue
             dynamic importMessage = JsonConvert.DeserializeObject(message);
+            await Import(importMessage);
+        }
+
+        public async Task Import(dynamic importMessage)
+        {
             var messageQueueTime = DateTime.UtcNow.Subtract((DateTime) importMessage.whenCreated);
             Trace.TraceInformation("Message was queued for " + messageQueueTime);
 
@@ -64,6 +69,32 @@ namespace Jukebox.Services
                 new PlaylistsApi(restHttpClient,
                     new ClientCredentialsAuthorizationApi(restHttpClient, appSettings,
                         new RuntimeMemoryCache(MemoryCache.Default))));
+        }
+    }
+
+    public class ImportSpotifyPlaylistServiceInvoker
+    {
+        public async Task<object> Invoke(dynamic input)
+        {
+            try
+            {
+                var appSettings = new NameValueCollection(System.Configuration.ConfigurationManager.AppSettings);
+                var restHttpClient = new RestHttpClient(new HttpClient());
+
+                var service = new ImportSpotifyPlaylistService(AzureTableStorage.GetTableStorage(appSettings),
+                    new PlaylistsApi(restHttpClient,
+                        new ClientCredentialsAuthorizationApi(restHttpClient, appSettings,
+                            new RuntimeMemoryCache(MemoryCache.Default))));
+
+                await service.Import(input);
+                return null;
+
+            }
+            catch(Exception exception)
+            {
+                Trace.TraceError(exception.Message);
+                return exception.Message;
+            }
         }
     }
 }
