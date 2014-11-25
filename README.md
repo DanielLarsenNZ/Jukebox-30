@@ -5,7 +5,7 @@ Demo project, presentation and notes for a talk about quickly building a Jukebox
 
 ### The talk
 
-The talk is a deep-dive introductory session, suitable for experienced developers who may not yet have explored Node.js or Azure Websites in depth. 
+"Hacking on Azure with Node.js and the Spotify Web API" is a deep-dive introductory session, suitable for experienced developers who may not yet have explored Node.js or Azure Websites in depth. 
 
 I will be talking about building this project at these upcoming meetups:
 
