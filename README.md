@@ -1,17 +1,17 @@
-Hacking-on-Azure
+Jukebox30
 ================
 
-Demo project, presentation and notes for a talk about quickly building useful software on Azure to explore what is possible. 
+Demo project, presentation and notes for a talk about quickly building a Jukebox web-app on Azure with Node.js and the Spotify Web API. 
 
 ### The talk
 
-The talk is a deep-dive introductory session, suitable for experienced developers who may not yet have explored Azure in depth. 
+"Hacking on Azure with Node.js and the Spotify Web API" is a deep-dive introductory session, suitable for experienced developers who may not yet have explored Node.js or Azure Websites in depth. 
 
 I will be talking about building this project at these upcoming meetups:
 
 * ~~Code Camp 2104~~
 * ~~[Wellington .NET UG, October 29th 2014](http://www.meetup.com/WelliDotNet/events/207322862/)~~
-* [Ellerslie .NET UG, November 25th 2014](http://www.meetup.com/EllerslieDNUG/events/218406792/)
+* ~~[Ellerslie .NET UG, November 25th 2014](http://www.meetup.com/EllerslieDNUG/events/218406792/)~~
 
 
 ### The demo app
