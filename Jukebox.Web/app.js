@@ -60,6 +60,7 @@ app.get('/api/jukeboxes', api.listJukeboxes);
 app.get('/api/jukeboxes/:id', api.getJukebox);
 app.get('/api/playlists', api.getPlaylists);
 app.post('/api/jukeboxes/:id/tracks', api.importPlaylist);
+app.get('/api/tracks', api.getTracks);
 
 var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

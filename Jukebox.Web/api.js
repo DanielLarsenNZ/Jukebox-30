@@ -83,5 +83,11 @@
             res.send(200, "ok");
         });
     };
+
+    module.exports.getTracks = function (req, res) {
+        var tracks = module.require('./services/tracksservice');
+        tracks.get(req.params.id, function (data) { res.json(data); });
+    };
+
 })();
 
