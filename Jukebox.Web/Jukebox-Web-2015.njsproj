@@ -24,7 +24,7 @@
     <Compile Include="api.js" />
     <Compile Include="services\httpjson.js" />
     <Compile Include="services\jukeboxservice.js" />
-    <Compile Include="services\messagequeue.js" />
+    <Compile Include="services\fake-kafka.js" />
     <Compile Include="services\playersocket.js" />
     <Compile Include="services\playlistservice.js" />
     <Compile Include="services\queuestorage.js" />
