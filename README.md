@@ -37,23 +37,21 @@ and <a href="http://socket.io/">socket.io</a>.
 
 * [Register for a Spotify API Key](https://developer.spotify.com/my-applications/#!/).
 * Install [NTVS](http://nodejstools.codeplex.com/) (optional)
-* [Install Azure Storage Emulator](http://www.microsoft.com/en-nz/download/details.aspx?id=42317) (optional if you have an Azure Storage Account)
-* Create a [.env](https://github.com/scottmotte/dotenv) file "Jukebox\.env" and add your secret keys for the Spotify API, and
-optionally for Table Storage (or use the Storage emulator), e.g.
+* Create a [.env](https://github.com/scottmotte/dotenv) file "Jukebox\.env" and add your secret keys for the Spotify API and Table Storage, e.g.
 
 ```
 SpotifyApiClientId=abcdef1234567890
 SpotifyApiClientSecret=abcdef1234567890
-StorageAccountName=devstoreaccount1
-StorageAccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
-StorageAccountTableStoreHost=127.0.0.1:10002
+StorageAccountName=youraccountname
+StorageAccountKey=youraccountkey==
+StorageAccountTableStoreHost=yourstorageaccounthost.com
 ```
 
-* git clone https://github.com/DanielLarsenNZ/Hacking-on-Azure.git
+* git clone https://github.com/DanielLarsenNZ/Jukebox-30.git
 * Then open your favourite console and run:
 
 ```
-cd Hacking-on-Azure\Jukebox.Web
+cd Jukebox-30\Jukebox.Web
 npm install
 ```
 
@@ -61,7 +59,7 @@ npm install
 
 ### Docs
 
-See the wiki at https://github.com/DanielLarsenNZ/Hacking-on-Azure/wiki. 
+See the wiki at https://github.com/DanielLarsenNZ/Jukebox-30/wiki. 
 
 ### Questions, comments, issues
 
