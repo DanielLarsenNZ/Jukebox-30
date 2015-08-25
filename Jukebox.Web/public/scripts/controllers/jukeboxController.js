@@ -41,8 +41,35 @@
         $scope.jukebox.trackCount = data.trackCount;
         $scope.jukebox.listenerCount = data.listenerCount;
     });
-
+        
+        
+    // SERVER TIME OFFSET ///////////////////////    
+    // this is the difference between the clocks on client and server. Positive value means client is fast (ahead of server)
+    var serverTimeOffset = 0;
+            
+    // initiates the server time offset measurement request. 
+    var getServerTimeOffset = function (){
+        socket.emit('system:getTimeOffset', new Date().getTime());
+    };
+        
+    // callback from request for server time
+    // measure the difference between client and server clocks using the Christian algorithm.
+    socket.on('system:timeOffset', function (clientTime, serverTime) {
+        var now = new Date().getTime();
+            
+        // christian algorithm
+        var offset = (now - clientTime) / 2;
+        serverTimeOffset = now - (serverTime + offset);
+            
+        console.log("getServerTimeOffset: The difference in time between client and server is %d ms.", serverTimeOffset);
+    });
     
+    // gets the current time on the server in milliseconds.
+    var getServerTime = function(){
+        return new Date().getTime() - serverTimeOffset;
+    };
+    // SERVER TIME OFFSET (end) ///////////////////////        
+        
 
     // plays an audio track from url starting at cue
     // For an advanced player implementation see 
@@ -75,10 +102,12 @@
         }, false);
         
         // set timer to push play at track.startTime;
-        var now = new Date();
+        var now = getServerTime();
         var startTime = new Date(track.startTime);
         console.log("startTime", startTime);
-        var timeout = Math.max(now.getTime(), startTime.getTime()) - now.getTime();
+        
+        // if startTime has passed, just play. TODO: Seek to catchup.
+        var timeout = Math.max(0, startTime.getTime()) - now;
         console.log("playing in ", timeout);
         var remainTimeout;
         
@@ -105,7 +134,6 @@
                 startsInTimeout = $timeout(startsInCountdown, 1000);
             }
         }, 1000);
-
     };
 
     // /socket.io
@@ -126,6 +154,7 @@
     $scope.start = function() {
         console.log("playButton.click");
         socket.emit('join', $scope.jukebox.id);
+        getServerTimeOffset();
         $scope.playing = true;
     };
 

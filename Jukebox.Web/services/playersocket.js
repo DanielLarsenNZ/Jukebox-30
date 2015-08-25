@@ -13,6 +13,10 @@
         socket.on('join', function(jukeboxId) {
             join(socket, jukeboxId);
         });
+        
+        socket.on('system:getTimeOffset', function(clientTime){
+            socket.emit('system:timeOffset', clientTime, new Date().getTime());
+        });
     };
 
     module.exports.start = function(io) {
