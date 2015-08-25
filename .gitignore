@@ -18,3 +18,5 @@ Jukebox.Web/App_Data/jobs/continuous/Jukebox-WebJobs/*.xml
 *.sln.ide
 Microsoft.NodejsTools.WebRole.dll
 npm-debug.log
+Code
+.settings
