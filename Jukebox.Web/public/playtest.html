@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script type="text/javascript">
+      // https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Using_HTML5_Audio_Video.pdf
+      // https://developer.mozilla.org/en/docs/Web/API/AudioContext
+      var AudioContext = window.AudioContext || window.webkitAudioContext;
+      var myAudioContext = new AudioContext();
+
+      
+      var request = new XMLHttpRequest();
+      request.open('GET', 'https://p.scdn.co/mp3-preview/f776f0d01fdfde2bc2275b5fc1bb8bfae4a5f92b', true);
+      request.responseType = 'arraybuffer';
+      request.onload = bufferSound;
+      request.send();
+      
+      var mySource;
+      
+      function bufferSound(event) {
+        var request = event.target;
+        var source = myAudioContext.createBufferSource();
+
+        myAudioContext.decodeAudioData(request.response, 
+          function(buffer){
+            source.buffer = buffer;
+            source.connect(myAudioContext.destination);
+            mySource = source;
+            document.querySelector('#play').removeAttribute("disabled");
+            document.querySelector('#stop').removeAttribute("disabled");
+          }, 
+          function(error){
+            throw error;
+          });
+      }
+      
+      function play(){
+        // play right now (0 seconds from now)
+        mySource.start();
+      }
+
+      function stop(){
+        mySource.stop();
+      }
+      
+    </script>
+  </head>
+  <body>
+    <button id="play" disabled="disabled" onclick="play()" >PLAY</button>
+    <button id="stop" disabled="disabled" onclick="stop()" >STOP</button>
+  </body>
+</html>
