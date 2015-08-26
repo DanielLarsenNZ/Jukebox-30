@@ -16,35 +16,40 @@
     $scope.jukebox = {};
     $scope.spotify = { userId: null, playlists: null };
 
-    $http.get('/api/jukeboxes/' + $routeParams.jukeboxId).success(function(data) {
-        $scope.jukebox = data[0];
-        $scope.spotify = { userId: $scope.jukebox.spotifyUsername, playlists: null };
-        
-        $scope.loading = false;
-        
-        if ($scope.spotify.userId) {
-            $scope.getPlaylists();
-        }
-         
-    }).error(function(data) {
-        $scope.error = data;
-        $scope.loading = false;
-    });
-
+    var audioContext;
     var AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) $scope.error = "Your browser does not support Web Audio";
-    var audioContext = new AudioContext();
+    if (AudioContext === undefined) {
+      $scope.error = "Your browser does not support Web Audio";
+      $scope.loading = false;
+    } 
+    else {
+      audioContext = new AudioContext();
 
-    // socket.io
-    socket.on('play', function(track) {
-        play(audioContext, track);
-    });
-
-    socket.on('jukebox:data', function(data) {
-        $scope.jukebox.trackCount = data.trackCount;
-        $scope.jukebox.listenerCount = data.listenerCount;
-    });
-        
+      $http.get('/api/jukeboxes/' + $routeParams.jukeboxId).success(function(data) {
+          $scope.jukebox = data[0];
+          $scope.spotify = { userId: $scope.jukebox.spotifyUsername, playlists: null };
+          
+          $scope.loading = false;
+          
+          if ($scope.spotify.userId) {
+              $scope.getPlaylists();
+          }
+          
+      }).error(function(data) {
+          $scope.error = data;
+          $scope.loading = false;
+      });
+  
+      // socket.io
+      socket.on('play', function(track) {
+          play(audioContext, track);
+      });
+  
+      socket.on('jukebox:data', function(data) {
+          $scope.jukebox.trackCount = data.trackCount;
+          $scope.jukebox.listenerCount = data.listenerCount;
+      });
+    }
         
     // SERVER TIME OFFSET ///////////////////////    
     // this is the difference between the clocks on client and server. Positive value means client is fast (ahead of server)
