@@ -31,10 +31,13 @@
         $scope.loading = false;
     });
 
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) $scope.error = "Your browser does not support Web Audio";
+    var audioContext = new AudioContext();
 
     // socket.io
     socket.on('play', function(track) {
-        play(track);
+        play(audioContext, track);
     });
 
     socket.on('jukebox:data', function(data) {
@@ -70,86 +73,108 @@
     };
     // SERVER TIME OFFSET (end) ///////////////////////        
         
+        
+    // PLAYER ///////////////////////////////////////
+    
+      // https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Using_HTML5_Audio_Video.pdf
+      // https://developer.mozilla.org/en/docs/Web/API/AudioContext
 
-    // plays an audio track from url starting at cue
-    // For an advanced player implementation see 
-    // https://github.com/possan/webapi-player-example/blob/master/services/playback.js
-    // http://www.w3schools.com/tags/ref_av_dom.asp
+      var loadAudio = function (context, url, callback){
+        // Loads an AudioBufferSourceNode ready for playback.
+        //  context: An AudioContext instance
+        //  url: The URL of the audio file to load.
+        //  callback: A function to call once the audio has been loaded. `callback(error:Error, source:AudioBufferSourceNode)`
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.responseType = 'arraybuffer';
+        
+        request.onload = function bufferSound(event) {
+          var request = event.target;
+          var source = context.createBufferSource();
+  
+          // async decodes the encoded buffer.
+          context.decodeAudioData(request.response, 
+            function(buffer){
+              source.buffer = buffer;
+              source.connect(context.destination);
+              callback(null, source);
+            }, 
+            function(error){
+              callback(error);
+            });
+        };
+        
+        request.send();
+      };
+          
     
     var startsInTimeout;
+    var sources = [];
 
-    var play = function (track) {
+    var play = function (context, track) {
+        // plays an audio track from url starting at cue
         if (!$scope.playing) return;
         console.log("play", track);
-
-        var audio = new Audio(track.url);
-        audio.id = track.id;
-        audio.controls = "controls";
-        $scope.audios[audio.id] = audio;
-        //$('#player').append(audio);
         
-        audio.addEventListener('loadedmetadata', function() {
-            console.log('audio loadedmetadata');
-        }, false);
-
-        audio.addEventListener('canplay', function() {
-            console.log('audio canplay', audio.currentTime);            
-        }, false);
-
-        audio.addEventListener('ended', function () {
-            console.log('audio ended', audio);
-            stop(audio);
-        }, false);
-        
-        // set timer to push play at track.startTime;
-        var now = getServerTime();
-        var startTime = new Date(track.startTime);
-        console.log("startTime", startTime);
-        
-        // if startTime has passed, just play. TODO: Seek to catchup.
-        var timeout = Math.max(0, startTime.getTime()) - now;
-        console.log("playing in ", timeout);
-        var remainTimeout;
-        
-        $timeout(function () {
-            if (remainTimeout) $timeout.cancel(remainTimeout);
-            track.remain = 30;
-            $scope.track = track;
-            audio.play();
-            
-            // start the remaining countdown
-            remainTimeout = $timeout(function countdown () {
-                track.remain--;
-                if (track.remain > 0) {
-                    remainTimeout = $timeout(countdown, 1000);
-                }
-            }, 1000);
-        }, timeout);
-
-        // startsIn countdown timer
-        $scope.startsIn = parseInt(timeout/1000);
-        startsInTimeout = $timeout(function startsInCountdown() {
-            $scope.startsIn--;
-            if ($scope.startsIn > 0) {
-                startsInTimeout = $timeout(startsInCountdown, 1000);
-            }
-        }, 1000);
+        loadAudio(context, track.url, function(error, source){
+          // set source to play at track.startTime;
+          var now = getServerTime();
+          var startTime = new Date(track.startTime);
+          console.log("startTime", startTime);
+          
+          // timeout is the difference between the time on the server and when the server said to start the track.
+          var timeout = Math.max(0, startTime.getTime()) - now;
+          
+          // start the audio exactly at track.startTime, a calculated offset relative to now.
+          // TODO: Seek to catchup if track does not load in time.
+          source.start(context.currentTime + timeout / 1000);
+          console.log("playing in ", timeout);
+          
+          source.onended = function(e){
+            console.log("onended: ", e.target);
+            stop(e.target);
+          };
+          
+          // keep a registry of sources for clean-up when stopping.
+          sources.push(source);
+          
+          // countdown and track display logic ///////////////
+          var remainTimeout;
+          
+          $timeout(function () {
+              if (remainTimeout) $timeout.cancel(remainTimeout);
+              track.remain = source.buffer.duration;
+              $scope.track = track;
+              
+              // start the remaining countdown
+              remainTimeout = $timeout(function countdown () {
+                  track.remain--;
+                  if (track.remain > 0) {
+                      remainTimeout = $timeout(countdown, 1000);
+                  }
+              }, 1000);
+          }, timeout);
+  
+          // startsIn countdown timer
+          $scope.startsIn = parseInt(timeout/1000);
+          startsInTimeout = $timeout(function startsInCountdown() {
+              $scope.startsIn--;
+              if ($scope.startsIn > 0) {
+                  startsInTimeout = $timeout(startsInCountdown, 1000);
+              }
+          }, 1000);        
+        });
     };
 
-    // /socket.io
-
-    var stop = function (audio) {
-        console.log("stopping", audio);
-        if (audio != null) {
-            audio.pause();
-            //audio.stop();
-            //$scope.tracks.shift();
-            //$('#' + track.id).detach();
-            delete $scope.audios[audio.id];
-            delete (audio);
-            audio = null;
+    var stop = function (source) {
+        if (source != null) {
+            console.log("stopping", source);
+            source.stop(0);
+            delete sources[source];
         }
     };
+     
+    // PLAYER (end) ///////////////////////////////////////
 
     $scope.start = function() {
         console.log("playButton.click");
@@ -160,8 +185,8 @@
 
     $scope.stop = function() {
         //socket.emit('stop', $scope.jukebox.id);
-        for (var audio in $scope.audios) {
-            stop($scope.audios[audio]);
+        for (var source in sources) {
+            stop(sources[source]);
         }
         $scope.track = null;
         $scope.playing = false;
