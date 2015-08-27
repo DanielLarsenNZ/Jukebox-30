@@ -10,7 +10,6 @@
     $scope.track = null;
     $scope.startsIn = 0;
     $scope.playing = false;
-    $scope.audios = [];
     $scope.playlists = [];
 
     $scope.jukebox = {};
@@ -122,6 +121,12 @@
         console.log("play", track);
         
         loadAudio(context, track.url, function(error, source){
+          if (error){
+              throw error;
+          }
+          
+          if (!$scope.playing) return;
+          
           // set source to play at track.startTime;
           var now = getServerTime();
           var startTime = new Date(track.startTime);
@@ -132,7 +137,8 @@
           
           // start the audio exactly at track.startTime, a calculated offset relative to now.
           // TODO: Seek to catchup if track does not load in time.
-          source.start(context.currentTime + timeout / 1000);
+          if (timeout < 0) timeout = 0;
+          source.start(context.currentTime + (timeout / 1000));
           console.log("playing in ", timeout);
           
           source.onended = function(e){
@@ -147,8 +153,14 @@
           var remainTimeout;
           
           $timeout(function () {
+              if (!$scope.playing) {
+                  $timeout.cancel(remainTimeout);
+                  return;
+              }
+              
               if (remainTimeout) $timeout.cancel(remainTimeout);
-              track.remain = source.buffer.duration;
+              
+              track.remain = parseInt(source.buffer.duration);
               $scope.track = track;
               
               // start the remaining countdown
@@ -174,7 +186,13 @@
     var stop = function (source) {
         if (source != null) {
             console.log("stopping", source);
-            source.stop(0);
+            
+            try {
+                source.stop(0);    
+            } catch (error) {
+                console.log(error.message);
+            }
+            
             delete sources[source];
         }
     };
