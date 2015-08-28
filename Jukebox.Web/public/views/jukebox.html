@@ -9,6 +9,12 @@
     </small>
 </h2>
 
+<div class="container" ng-show="error">
+    <div class="alert alert-danger" role="alert">
+        <strong>Error!</strong> {{ error }}
+    </div>
+</div>
+
 <div class="panel panel-default player" ng-show="!track && playing">
     <div class="panel-body" style="font-size: 2em;">
         <div class="spinner pull-left" style="height:150px;width:150px;margin:auto 10px;">
@@ -82,11 +88,5 @@
         <div class="rect3"></div>
         <div class="rect4"></div>
         <div class="rect5"></div>
-    </div>
-</div>
-
-<div class="container" ng-show="error">
-    <div class="alert alert-danger" role="alert">
-        <strong>Error!</strong> {{ error }}
     </div>
 </div>

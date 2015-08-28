@@ -53,7 +53,6 @@
     
               
     var startsInTimeout;
-    var sources = [];
 
     var timeUntilTrackStart = function (trackStartTime){
         var now = servertime.getServerTime();
@@ -64,6 +63,8 @@
     };
     
     var startSource = function (track){
+      if (!webaudio.isSupported) return;
+      
       // todo: track service
       track.mute(false);
       
@@ -97,39 +98,38 @@
           // todo: trackservice
           track.mute = function(muteOn){
             if (muteOn === undefined) muteOn = true;
-            this.gain.gain.value = muteOn ? 0 : 1;
+            if (webaudio.isSupported) this.gain.gain.value = muteOn ? 0 : 1;
           }
 
           track.mute();
           
           track.remain = parseInt(source.buffer.duration);
           if ($scope.audioOn) startSource(track);
-          
-          // countdown and track display logic ///////////////
-          var remainTimeout;
-                    
-          $timeout(function () {
-              if (!$scope.playing) {
-                  $timeout.cancel(remainTimeout);
-                  return;
-              }
-              
-              if (remainTimeout) $timeout.cancel(remainTimeout);
-              
-              $scope.track = track;
-              
-              // start the remaining countdown
-              remainTimeout = $timeout(function countdown () {
-                  track.remain--;
-                  if (track.remain > 0) {
-                      remainTimeout = $timeout(countdown, 1000);
-                  }
-              }, 1000);
-          }, timeUntilTrackStart(track.startTime));
-
         });
       }
       
+      // countdown and track display logic ///////////////
+      var remainTimeout;
+                
+      $timeout(function () {
+          if (!$scope.playing) {
+              $timeout.cancel(remainTimeout);
+              return;
+          }
+          
+          if (remainTimeout) $timeout.cancel(remainTimeout);
+          
+          $scope.track = track;
+          
+          // start the remaining countdown
+          remainTimeout = $timeout(function countdown () {
+              track.remain--;
+              if (track.remain > 0) {
+                  remainTimeout = $timeout(countdown, 1000);
+              }
+          }, 1000);
+      }, timeUntilTrackStart(track.startTime));
+
       if (!$scope.track){
         // startsIn countdown timer
         $scope.startsIn = parseInt(timeUntilTrackStart(track.startTime)/1000);
@@ -161,11 +161,16 @@
 
     $scope.mute = function() {
         $scope.audioOn = false;
-        $scope.track.mute();
+        if (webaudio.isSupported) $scope.track.mute();
     };
     
     $scope.unmute = function() {
       $scope.audioOn = true;
+      if (!webaudio.isSupported) {
+        $scope.error = "Web audio is not supported by this Browser.";
+        return;
+      } 
+      
       $scope.track.mute(false);
   
       try {
