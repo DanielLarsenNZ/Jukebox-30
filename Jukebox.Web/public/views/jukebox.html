@@ -1,13 +1,19 @@
 ﻿<h2>
     {{ jukebox.name }} <span ng-show="loading">Loading...</span>
-    <button id="playButton" class="btn btn-success" ng-disabled="loading" ng-click="start()" ng-show="!playing">Play</button>
-    <button class="btn btn-danger" ng-show="playing" ng-click="stop()">Stop</button>
+    <button class="btn btn-danger" ng-show="audioOn && track" ng-click="mute()">Mute</button>
+    <button class="btn btn-success" ng-show="!audioOn && track" ng-click="unmute()" >Un-mute</button>
     <small>
         <span class="label label-info" ng-show="jukebox.trackCount">{{ jukebox.trackCount }} tracks</span>
         <span class="label label-info" ng-show="jukebox.listenerCount == 1">1 listener</span>
         <span class="label label-info" ng-show="jukebox.listenerCount > 1">{{ jukebox.listenerCount }} listeners</span>
     </small>
 </h2>
+
+<div class="container" ng-show="error">
+    <div class="alert alert-danger" role="alert">
+        <strong>Error!</strong> {{ error }}
+    </div>
+</div>
 
 <div class="panel panel-default player" ng-show="!track && playing">
     <div class="panel-body" style="font-size: 2em;">
@@ -20,7 +26,7 @@
         </div>
         <div ng-show="!startsIn"><span class="glyphicon glyphicon-pause"></span> 00:00 </div>
         <div ng-show="startsIn"><span class="glyphicon glyphicon-pause"></span> 00:{{ startsIn | numberFixedLen:2 }} </div>
-        <div>Stand by...</div>
+        <div>Connecting to Jukebox...</div>
     </div>
 </div>
 
@@ -83,18 +89,4 @@
         <div class="rect4"></div>
         <div class="rect5"></div>
     </div>
-</div>
-
-<div class="container" ng-show="error">
-    <div class="alert alert-danger" role="alert">
-        <strong>Error!</strong> {{ error }}
-    </div>
-</div>
-
-<div class="container">
-    <br>
-    <audio controls="controls">
-    Your browser does not support the <code>audio</code> element.
-    <source src="https://p.scdn.co/mp3-preview/e656dfeaeda4cb98922fe950a6b9831d053f9abf" type="audio/mpeg">
-    </audio>
 </div>
