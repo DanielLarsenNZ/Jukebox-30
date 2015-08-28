@@ -93,8 +93,18 @@
     }
 
     var select = function(track, tracks) {
-        var index = (Math.floor(Math.random() * (tracks.length - 1)) + 1) - 1;
-        console.log("selected from tracks", index, tracks.length);
+        // some tracks don't have a preview URL :(
+        // try and find a track with a preview URL n times, where n if the total tracks in the library.
+        // if no track is found, a track with a null URL will be returned.
+        var index = 0;
+        for (var i = 0; i < tracks.length; i++)
+        {
+          index = (Math.floor(Math.random() * (tracks.length - 1)) + 1) - 1;
+          if (tracks[index].PreviewUrl !== undefined) break;
+          console.log("track does not have a PreviewUrl. name = %s, id = %s", tracks[index].Name, tracks[index].Id);
+        }
+      
+        console.log("selected track %d \"%s\" from a library of %d tracks.", index, tracks[index].Name, tracks.length);
 
         var now = new Date();
         //TODO: //var startTime = new Date(track ? track.startTime + tracks[index].duration : new Date().getTime() + 10000);
