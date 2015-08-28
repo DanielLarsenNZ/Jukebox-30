@@ -1,7 +1,5 @@
-﻿app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout', '$routeParams', 'socket',  
-    function ($scope, $http, $location, $timeout, $routeParams, socket) {
-    console.log($scope);
-
+﻿app.controller('jukeboxController', ['$scope', '$http', '$location', '$timeout', '$routeParams', 'socket', 'servertime', 
+    function ($scope, $http, $location, $timeout, $routeParams, socket, servertime) {
     $scope.loading = true;
     $scope.playlistsLoading = false;
     $scope.chooseMusic = false;
@@ -49,33 +47,8 @@
           $scope.jukebox.listenerCount = data.listenerCount;
       });
     }
-        
-    // SERVER TIME OFFSET ///////////////////////    
-    // this is the difference between the clocks on client and server. Positive value means client is fast (ahead of server)
-    var serverTimeOffset = 0;
-            
-    // initiates the server time offset measurement request. 
-    var getServerTimeOffset = function (){
-        socket.emit('system:getTimeOffset', new Date().getTime());
-    };
-        
-    // callback from request for server time
-    // measure the difference between client and server clocks using the Christian algorithm.
-    socket.on('system:timeOffset', function (clientTime, serverTime) {
-        var now = new Date().getTime();
-            
-        // christian algorithm
-        var offset = (now - clientTime) / 2;
-        serverTimeOffset = now - (serverTime + offset);
-            
-        console.log("getServerTimeOffset: The difference in time between client and server is %d ms.", serverTimeOffset);
-    });
-    
-    // gets the current time on the server in milliseconds.
-    var getServerTime = function(){
-        return new Date().getTime() - serverTimeOffset;
-    };
-    // SERVER TIME OFFSET (end) ///////////////////////        
+
+    servertime.measureOffset();        
         
         
     // PLAYER ///////////////////////////////////////
@@ -128,7 +101,7 @@
           if (!$scope.playing) return;
           
           // set source to play at track.startTime;
-          var now = getServerTime();
+          var now = servertime.getServerTime();
           var startTime = new Date(track.startTime);
           console.log("startTime", startTime);
           
@@ -200,9 +173,6 @@
     // PLAYER (end) ///////////////////////////////////////
 
     $scope.start = function() {
-        console.log("playButton.click");
-        socket.emit('join', $scope.jukebox.id);
-        getServerTimeOffset();
         $scope.playing = true;
     };
 
