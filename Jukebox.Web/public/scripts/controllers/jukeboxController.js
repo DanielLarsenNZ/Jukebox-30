@@ -180,10 +180,18 @@
       }
     };
     
+   $scope.currentPlaylistUser = null;
+    
     $scope.getPlaylists = function() {
         $scope.error = null;
         $scope.playlistsLoading = true;
         var offset = 0;
+
+        // if the spotify username has changed since last request,  reset the list.
+        if ($scope.currentPlaylistUser != $scope.spotify.userId) {
+          $scope.playlists = [];
+          $scope.spotify.playlists = null;
+        }
 
         if ($scope.spotify.playlists) {
             offset = $scope.spotify.playlists.offset + $scope.spotify.playlists.limit;
@@ -198,6 +206,8 @@
             $scope.error = data.error.message;
             $scope.playlistsLoading = false;
         });
+        
+        $scope.currentPlaylistUser = $scope.spotify.userId;
     };
 
     $scope.addPlaylist = function(playlist) {
