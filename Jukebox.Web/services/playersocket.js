@@ -55,10 +55,10 @@
             return;
         }
 
-        // if track has less than 15 seconds to play, select a new track and emit it
+        // if track has less than 25 seconds to play, select a new track and emit it
         var track = getTrack(jukeboxId); 
         //TODO: //if (!track || getCue(track) > track.duration - 15000) {
-        if (!track || getCue(track) > 15000) {
+        if (!track || getCue(track) > 30000 - 25000) {
             console.log("playerSocket: Selecting a new track for jukebox %s", jukeboxId);
 
             // get tracks from storage. This is the same cost as a message queue check, up to 1000 entities.
