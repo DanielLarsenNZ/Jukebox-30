@@ -57,7 +57,7 @@
     var timeUntilTrackStart = function (trackStartTime){
         var now = servertime.getServerTime();
         var startTime = new Date(trackStartTime);        
-        // return the difference between the time on the server and when the server said to start the track.
+        // return the difference between the time on the server and when the server said to start the track in ms.
         //  negative number indicates track should have already started.
         return startTime.getTime() - now;      
     };
@@ -110,7 +110,13 @@
       
       // countdown and track display logic ///////////////
       var remainTimeout;
-                
+      var timeout = timeUntilTrackStart(track.startTime);
+      
+      if (timeout < 0){
+        timeout = 0;
+        track.remain = track.remain - Math.abs(parseInt(timeout * 1000));
+      }
+      
       $timeout(function () {
           if (!$scope.playing) {
               $timeout.cancel(remainTimeout);
@@ -128,11 +134,11 @@
                   remainTimeout = $timeout(countdown, 1000);
               }
           }, 1000);
-      }, timeUntilTrackStart(track.startTime));
+      }, timeout);
 
       if (!$scope.track){
         // startsIn countdown timer
-        $scope.startsIn = parseInt(timeUntilTrackStart(track.startTime)/1000);
+        $scope.startsIn = parseInt(timeout/1000);
         startsInTimeout = $timeout(function startsInCountdown() {
             $scope.startsIn--;
             if ($scope.startsIn > 0) {
@@ -143,20 +149,6 @@
       
     };
 
-    // var stop = function (source) {
-    //     if (source != null) {
-    //         console.log("stopping", source);
-    //         
-    //         try {
-    //             source.stop(0);    
-    //         } catch (error) {
-    //             console.log(error.message);
-    //         }
-    //         
-    //         delete sources[source];
-    //     }
-    // };
-     
     // PLAYER (end) ///////////////////////////////////////
 
     $scope.mute = function() {
