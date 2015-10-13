@@ -12,6 +12,7 @@ I will be talking about building this project at these upcoming meetups:
 * ~~Code Camp 2104~~
 * ~~[Wellington .NET UG, October 29th 2014](http://www.meetup.com/WelliDotNet/events/207322862/)~~
 * ~~[Ellerslie .NET UG, November 25th 2014](http://www.meetup.com/EllerslieDNUG/events/218406792/)~~
+* ~~North Shore .NET User Group, 2014~~
 * ~~[Microsoft Ignite NZ 2015](https://channel9.msdn.com/events/Ignite/Microsoft-Ignite-New-Zealand-2015/M361)~~
 
 
