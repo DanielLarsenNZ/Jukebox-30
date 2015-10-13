@@ -12,6 +12,7 @@ I will be talking about building this project at these upcoming meetups:
 * ~~Code Camp 2104~~
 * ~~[Wellington .NET UG, October 29th 2014](http://www.meetup.com/WelliDotNet/events/207322862/)~~
 * ~~[Ellerslie .NET UG, November 25th 2014](http://www.meetup.com/EllerslieDNUG/events/218406792/)~~
+* ~~[Microsoft Ignite NZ 2015](https://channel9.msdn.com/events/Ignite/Microsoft-Ignite-New-Zealand-2015/M361)~~
 
 
 ### The demo app
@@ -19,8 +20,8 @@ I will be talking about building this project at these upcoming meetups:
 [http://jukebox30.azurewebsites.net/](http://jukebox30.azurewebsites.net/)
 
 This is a proof of concept web-app for demonstration purposes. <a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure/fork">Contributions</a>,
-comments and <a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure/issues">issues</a>
-welcomed. <a href="https://github.com/DanielLarsenNZ/Hacking-on-Azure/blob/master/LICENSE">License</a> is MIT.
+comments and <a href="https://github.com/DanielLarsenNZ/Jukebox-30/issues">issues</a>
+welcomed. <a href="https://github.com/DanielLarsenNZ/Jukebox-30/blob/master/LICENSE">License</a> is MIT.
 
 ### Technologies used
 
